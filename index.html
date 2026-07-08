@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/styles.css" />
     <link rel="stylesheet" href="css/calendar.css" />
     <link rel="stylesheet" href="css/modal.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
   </head>
   <body>
     <div class="container">
@@ -83,7 +84,7 @@
             <!-- Date Selection -->
             <div class="form-group">
               <label for="bookingDate">Ngày Họp:</label>
-              <input type="date" id="bookingDate" required />
+              <input type="text" id="bookingDate" required />
             </div>
 
             <!-- Time Range Selection -->
@@ -116,18 +117,18 @@
 
             <div class="form-group">
               <label for="organizerPhone">Số Điện Thoại:</label>
-              <input type="tel" id="organizerPhone" placeholder="0xxx xxx xxx" required />
+              <input type="tel" id="organizerPhone" placeholder="0xxx xxx xxx" />
             </div>
 
             <div class="form-group">
               <label for="organizerEmail">Email:</label>
-              <input type="email" id="organizerEmail" placeholder="abc@example.com" required />
+              <input type="email" id="organizerEmail" placeholder="abc@example.com" />
             </div>
 
             <!-- Attendees -->
             <div class="form-group">
               <label for="attendeesCount">Số Người Dự Kiến:</label>
-              <input type="number" id="attendeesCount" min="1" max="30" placeholder="Nhập số lượng" required />
+              <input type="number" id="attendeesCount" min="1" max="30" placeholder="Nhập số lượng" />
             </div>
 
             <!-- Notes -->
@@ -234,6 +235,7 @@
     </div>
 
     <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database-compat.js"></script>
     <script src="js/firebase-config.js"></script>

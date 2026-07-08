@@ -99,6 +99,9 @@ function updateScheduleDisplay() {
   const timeSlots = getScheduleTimeSlots();
 
   rooms.forEach((room) => {
+    // Keep track of how many cells to skip for each day column due to rowspan
+    let skipCells = [0, 0, 0, 0, 0, 0, 0];
+
     timeSlots.forEach((slot, slotIdx) => {
       const row = document.createElement("tr");
 
@@ -126,24 +129,51 @@ function updateScheduleDisplay() {
 
       // ---- Cột Ngày (7 cột) ----
       for (let dayOffset = 0; dayOffset < 7; dayOffset++) {
+        // If this column is being spanned by a previous row, skip creating td
+        if (skipCells[dayOffset] > 0) {
+          skipCells[dayOffset]--;
+          continue;
+        }
+
         const cellDate = new Date(currentWeekStart);
         cellDate.setDate(cellDate.getDate() + dayOffset);
         const dateStr = formatDate(cellDate);
+        const weekday = cellDate.getDay(); // 0=CN,1=T2,...,6=T7
 
         const cell = document.createElement("td");
         cell.className = "schedule-cell";
 
-        // Chủ nhật (dayOffset tương ứng với CN) → chỉ hiển thị --
-        const weekday = cellDate.getDay(); // 0=CN,1=T2,...,6=T7
-
         if (slot.isBreak) {
-          // Break time cell
+          // Break time cell (only if not spanned over by a booking)
           cell.classList.add("break-cell");
           cell.textContent = "NGHỈ";
+          row.appendChild(cell);
         } else {
           const booking = getBookingForSlot(dateStr, room.id, slot);
 
           if (booking) {
+            // Calculate rowspan by checking subsequent slots for the same booking
+            let rowspan = 1;
+            for (let k = slotIdx + 1; k < timeSlots.length; k++) {
+              // If the booking spans across a break, we include the break in the rowspan
+              // wait, getBookingForSlot returns null for break.
+              // So we check if the booking's endTime is > the next slot's startTime
+              const nextSlot = timeSlots[k];
+              const bookEnd = Math.floor(parseInt(booking.endTime) / 100) * 60 + (parseInt(booking.endTime) % 100);
+              const nextSlotStart = nextSlot.hour * 60 + nextSlot.min;
+              
+              if (bookEnd > nextSlotStart) {
+                rowspan++;
+              } else {
+                break;
+              }
+            }
+
+            if (rowspan > 1) {
+              cell.rowSpan = rowspan;
+              skipCells[dayOffset] = rowspan - 1;
+            }
+
             cell.classList.add("booked");
             cell.innerHTML = `
                         <div class="booking-info">
@@ -161,9 +191,8 @@ function updateScheduleDisplay() {
             cell.innerHTML = "";
             cell.addEventListener("click", () => selectBookingSlot(dateStr, room.id, slot));
           }
+          row.appendChild(cell);
         }
-
-        row.appendChild(cell);
       }
 
       scheduleBody.appendChild(row);
@@ -230,7 +259,12 @@ function selectBookingSlot(dateStr, roomId, slot) {
   if (bookingTab) bookingTab.click();
 
   // Fill in the form
-  document.getElementById("bookingDate").value = dateStr;
+  const bookingDateInput = document.getElementById("bookingDate");
+  if (bookingDateInput._flatpickr) {
+    bookingDateInput._flatpickr.setDate(dateStr);
+  } else {
+    bookingDateInput.value = dateStr;
+  }
   document.getElementById("roomSelect").value = roomId;
 
   // Set start time (convert from HH:MM format to HHMM format)

@@ -22,8 +22,19 @@ function initBookingForm() {
 
   // Set minimum date to today
   const today = new Date();
-  bookingDate.min = formatDate(today);
-  bookingDate.value = formatDate(today);
+  
+  // Initialize flatpickr on bookingDate
+  flatpickr(bookingDate, {
+    dateFormat: "Y-m-d",
+    altInput: true,
+    altFormat: "d/m/Y",
+    minDate: "today",
+    defaultDate: today,
+    onChange: function(selectedDates, dateStr, instance) {
+       // Trigger change event to update available times
+       bookingDate.dispatchEvent(new Event("change"));
+    }
+  });
 
   // Populate time slots (30-minute intervals from 7:00 to 17:00)
   populateTimeSlots(startTimeSelect);
@@ -217,7 +228,7 @@ async function handleBookingSubmit(e) {
       organizerName: document.getElementById("organizerName").value,
       organizerPhone: document.getElementById("organizerPhone").value,
       organizerEmail: document.getElementById("organizerEmail").value,
-      attendeesCount: parseInt(document.getElementById("attendeesCount").value),
+      attendeesCount: document.getElementById("attendeesCount").value ? parseInt(document.getElementById("attendeesCount").value) : "",
       notes: document.getElementById("notes").value,
     };
 
