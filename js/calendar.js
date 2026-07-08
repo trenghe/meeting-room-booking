@@ -147,9 +147,8 @@ function updateScheduleDisplay() {
             cell.classList.add("booked");
             cell.innerHTML = `
                         <div class="booking-info">
-                            <div class="booking-org">${booking.organizerDept || ""}</div>
-                            <div class="booking-cap-info">Sĩ số: ${booking.attendeesCount || ""}</div>
                             <div class="booking-purpose">${booking.purpose}</div>
+                            <div class="booking-org">${booking.organizerName}</div>
                         </div>
                     `;
             cell.addEventListener("click", () => showBookingDetails(booking));
