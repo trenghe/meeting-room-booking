@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản Lý Lịch Họp - Admin</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://www.clipartmax.com/png/small/49-494520_board-room-projection-system-meeting-room-booking-icon.png" />
+    <!-- Tải các CSS cần thiết -->
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <section id="adminView">
+        <div style="margin-bottom: 20px;">
+          <!-- Link đã được cập nhật trỏ về trang chủ index.html -->
+          <a href="index.html" id="backToMainLink" style="text-decoration: none; color: #4361ee; font-weight: bold;">&larr; Quay lại trang chính</a>
+        </div>
+        <div class="admin-container">
+          <h2>Quản Lý Lịch Họp</h2>
+          <div class="table-responsive">
+            <table class="admin-table" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+              <thead>
+                <tr style="background-color: #f2f2f2;">
+                  <th style="padding: 12px; border: 1px solid #ddd;">Ngày</th>
+                  <th style="padding: 12px; border: 1px solid #ddd;">Phòng</th>
+                  <th style="padding: 12px; border: 1px solid #ddd;">Giờ</th>
+                  <th style="padding: 12px; border: 1px solid #ddd;">Người Đặt</th>
+                  <th style="padding: 12px; border: 1px solid #ddd;">Mục Đích</th>
+                  <th style="padding: 12px; border: 1px solid #ddd;">Thao tác</th>
+                </tr>
+              </thead>
+              <tbody id="adminBookingsBody">
+                <!-- Data populated by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Scripts -->
+    <!-- Gọi Firebase để lấy dữ liệu lịch đặt phòng -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database-compat.js"></script>
+    
+    <!-- Gọi cấu hình Firebase và logic cho trang Admin -->
+    <script src="js/firebase-config.js"></script>
+    <script src="js/admin.js"></script>
+  </body>
+</html>
