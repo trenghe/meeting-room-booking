@@ -2,11 +2,28 @@
 document.addEventListener("DOMContentLoaded", () => {
   console.log("DOM Content Loaded - Initializing application");
 
-  // Initialize all components
-  initCalendar();
-  initBookingForm();
-  setupTabNavigation();
-  setupModalClosing();
+  // Handle routing for Admin view
+  if (window.location.hash === '#admin' || window.location.search.includes('admin') || window.location.pathname.endsWith('/admin')) {
+    document.querySelector('.nav-tabs').style.display = 'none';
+    document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
+    document.getElementById('adminView').classList.remove('hidden');
+    document.getElementById('adminView').style.display = 'block';
+    
+    // Back to main button
+    document.getElementById('backToMainLink').addEventListener('click', (e) => {
+      e.preventDefault();
+      window.history.pushState('', document.title, window.location.pathname.replace('/admin', ''));
+      window.location.hash = '';
+      window.location.search = '';
+      window.location.reload();
+    });
+  } else {
+    // Normal flow
+    initCalendar();
+    initBookingForm();
+    setupTabNavigation();
+    setupModalClosing();
+  }
 
   console.log("Application initialized");
 });

@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hệ thống Đặt Lịch Phòng Họp</title>
+    <link rel="icon" type="image/png" href="https://www.clipartmax.com/png/small/49-494520_board-room-projection-system-meeting-room-booking-icon.png" />
     <link rel="stylesheet" href="css/styles.css" />
     <link rel="stylesheet" href="css/calendar.css" />
     <link rel="stylesheet" href="css/modal.css" />
@@ -221,6 +222,33 @@
           </div>
         </div>
       </section>
+
+      <!-- Admin Routing Section (Hidden by default) -->
+      <section id="adminView" class="hidden">
+        <div style="margin-bottom: 20px;">
+          <a href="#" id="backToMainLink" style="text-decoration: none; color: #4361ee; font-weight: bold;">&larr; Quay lại trang chính</a>
+        </div>
+        <div class="admin-container">
+          <h2>Quản Lý Lịch Họp</h2>
+          <div class="table-responsive">
+            <table class="admin-table" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+              <thead>
+                <tr style="background-color: #f2f2f2;">
+                  <th style="padding: 12px; border: 1px solid #ddd;">Ngày</th>
+                  <th style="padding: 12px; border: 1px solid #ddd;">Phòng</th>
+                  <th style="padding: 12px; border: 1px solid #ddd;">Giờ</th>
+                  <th style="padding: 12px; border: 1px solid #ddd;">Người Đặt</th>
+                  <th style="padding: 12px; border: 1px solid #ddd;">Mục Đích</th>
+                  <th style="padding: 12px; border: 1px solid #ddd;">Thao tác</th>
+                </tr>
+              </thead>
+              <tbody id="adminBookingsBody">
+                <!-- Data populated by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
     </div>
 
     <!-- Booking Modal for Calendar -->
@@ -241,6 +269,7 @@
     <script src="js/firebase-config.js"></script>
     <script src="js/calendar.js"></script>
     <script src="js/booking.js"></script>
+    <script src="js/admin.js"></script>
     <script src="js/main.js"></script>
   </body>
 </html>

@@ -105,6 +105,19 @@ async function saveBooking(bookingData) {
   }
 }
 
+// Helper function to delete booking
+async function deleteBooking(bookingId) {
+  try {
+    const bookingPath = `bookings/${bookingId}`;
+    await database.ref(bookingPath).remove();
+    console.log("Booking deleted:", bookingId);
+    return { success: true };
+  } catch (error) {
+    console.error("Error deleting booking:", error);
+    return { success: false, error: error.message };
+  }
+}
+
 // Helper function to get bookings for a specific date and room
 function getBookingsForDateAndRoom(date, room) {
   return Object.values(bookings).filter((booking) => booking.date === date && booking.room === room);
