@@ -14,9 +14,10 @@ function getWeekRangeText(startDate) {
   const endDate = new Date(startDate);
   endDate.setDate(endDate.getDate() + 6);
 
-  const options = { day: "numeric", month: "numeric" };
-  const startText = startDate.toLocaleDateString("vi-VN", options);
-  const endText = endDate.toLocaleDateString("vi-VN", { ...options, year: "numeric" });
+  const pad = (n) => String(n).padStart(2, "0");
+
+  const startText = `${pad(startDate.getDate())}/${pad(startDate.getMonth() + 1)}`;
+  const endText = `${pad(endDate.getDate())}/${pad(endDate.getMonth() + 1)}/${endDate.getFullYear()}`;
 
   return `Tuần: ${startText} - ${endText}`;
 }
@@ -61,17 +62,26 @@ function setupScheduleNavigation() {
 /// Define time slots with specific time ranges
 function getScheduleTimeSlots() {
   return [
-    { id: "slot1", label: "Slot 1", display: "Slot 1\n(7:30 - 8:15)", hour: 7, min: 30, endHour: 8, endMin: 15, isBreak: false },
-    { id: "slot2", label: "Slot 2", display: "Slot 2\n(8:15 - 9:00)", hour: 8, min: 15, endHour: 9, endMin: 0, isBreak: false },
-    { id: "slot3", label: "Slot 3", display: "Slot 3\n(9:00 - 9:45)", hour: 9, min: 0, endHour: 9, endMin: 45, isBreak: false },
-    { id: "slot4", label: "Slot 4", display: "Slot 4\n(10:00 - 10:45)", hour: 10, min: 0, endHour: 10, endMin: 45, isBreak: false },
-    { id: "slot5", label: "Slot 5", display: "Slot 5\n(10:45 - 11:30)", hour: 10, min: 45, endHour: 11, endMin: 30, isBreak: false },
-    { id: "break", label: "NGHỈ TRƯA", display: "NGHỈ\nTRƯA", hour: 11, min: 30, endHour: 13, endMin: 0, isBreak: true },
-    { id: "slot6", label: "Slot 6", display: "Slot 6\n(13:00 - 13:45)", hour: 13, min: 0, endHour: 13, endMin: 45, isBreak: false },
-    { id: "slot7", label: "Slot 7", display: "Slot 7\n(13:45 - 14:30)", hour: 13, min: 45, endHour: 14, endMin: 30, isBreak: false },
-    { id: "slot8", label: "Slot 8", display: "Slot 8\n(14:30 - 15:15)", hour: 14, min: 30, endHour: 15, endMin: 15, isBreak: false },
-    { id: "slot9", label: "Slot 9", display: "Slot 9\n(15:30 - 16:15)", hour: 15, min: 30, endHour: 16, endMin: 15, isBreak: false },
-    { id: "slot10", label: "Slot 10", display: "Slot 10\n(16:15 - 17:00)", hour: 16, min: 15, endHour: 17, endMin: 0, isBreak: false },
+    { id: "slot1", label: "Slot 1", display: "7:30", hour: 7, min: 30, endHour: 8, endMin: 0, isBreak: false },
+    { id: "slot2", label: "Slot 2", display: "8:00", hour: 8, min: 0, endHour: 8, endMin: 30, isBreak: false },
+    { id: "slot3", label: "Slot 3", display: "8:30", hour: 8, min: 30, endHour: 9, endMin: 0, isBreak: false },
+    { id: "slot4", label: "Slot 4", display: "9:00", hour: 9, min: 0, endHour: 9, endMin: 30, isBreak: false },
+    { id: "slot5", label: "Slot 5", display: "9:30", hour: 9, min: 30, endHour: 10, endMin: 0, isBreak: false },
+    { id: "slot6", label: "Slot 6", display: "10:00", hour: 10, min: 0, endHour: 10, endMin: 30, isBreak: false },
+    { id: "slot7", label: "Slot 7", display: "10:30", hour: 10, min: 30, endHour: 11, endMin: 0, isBreak: false },
+    { id: "slot8", label: "Slot 8", display: "11:00", hour: 11, min: 0, endHour: 11, endMin: 30, isBreak: false },
+    { id: "slot9", label: "Slot 9", display: "11:30", hour: 11, min: 30, endHour: 12, endMin: 0, isBreak: false },
+    { id: "slot10", label: "Slot 10", display: "12:00", hour: 12, min: 0, endHour: 12, endMin: 30, isBreak: false },
+    { id: "slot11", label: "Slot 11", display: "12:30", hour: 12, min: 30, endHour: 13, endMin: 0, isBreak: false },
+    { id: "slot12", label: "Slot 12", display: "13:00", hour: 13, min: 0, endHour: 13, endMin: 30, isBreak: false },
+    { id: "slot13", label: "Slot 13", display: "13:30", hour: 13, min: 30, endHour: 14, endMin: 0, isBreak: false },
+    { id: "slot14", label: "Slot 14", display: "14:00", hour: 14, min: 0, endHour: 14, endMin: 30, isBreak: false },
+    { id: "slot15", label: "Slot 15", display: "14:30", hour: 14, min: 30, endHour: 15, endMin: 0, isBreak: false },
+    { id: "slot16", label: "Slot 16", display: "15:00", hour: 15, min: 0, endHour: 15, endMin: 30, isBreak: false },
+    { id: "slot17", label: "Slot 17", display: "15:30", hour: 15, min: 30, endHour: 16, endMin: 0, isBreak: false },
+    { id: "slot18", label: "Slot 18", display: "16:00", hour: 16, min: 0, endHour: 16, endMin: 30, isBreak: false },
+    { id: "slot19", label: "Slot 19", display: "16:30", hour: 16, min: 30, endHour: 17, endMin: 0, isBreak: false },
+    { id: "slot20", label: "Slot 20", display: "17:00", hour: 17, min: 0, endHour: 17, endMin: 30, isBreak: false },    
   ];
 }
 
@@ -112,7 +122,6 @@ function updateScheduleDisplay() {
         roomCell.rowSpan = timeSlots.length;
         roomCell.innerHTML = `
                     <div class="room-name">${room.name}</div>
-                    <div class="room-cap">Sức chứa : ${room.capacity}</div>
                 `;
         row.appendChild(roomCell);
       }
@@ -185,7 +194,7 @@ function updateScheduleDisplay() {
           } else if (weekday === 0) {
             // Chủ nhật → hiển thị dấu gạch
             cell.classList.add("dash-cell");
-            cell.textContent = "-- ... --";
+
           } else {
             cell.classList.add("empty");
             cell.innerHTML = "";

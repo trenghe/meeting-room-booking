@@ -15,15 +15,15 @@
   gap: 30px;
   margin-bottom: 24px;
   padding: 18px 24px;
-  background: linear-gradient(135deg, rgba(30, 64, 175, 0.06), rgba(14, 165, 233, 0.06));
+  background: linear-gradient(135deg, rgba(104, 154, 75, 0.1), rgba(139, 195, 74, 0.08));
   border-radius: 10px;
-  border: 1px solid rgba(30, 64, 175, 0.12);
+  border: 1px solid rgba(104, 154, 75, 0.25);
 }
 
 .schedule-header h2 {
   min-width: 260px;
   text-align: center;
-  color: var(--primary-color);
+  color: var(--secondary-color);
   font-size: 1.5rem;
   font-weight: 700;
 }
@@ -31,25 +31,25 @@
 .nav-button {
   padding: 10px 22px;
   background: var(--primary-color);
-  color: white;
+  color: #ffffff;
   border: none;
   border-radius: 8px;
   font-size: 1.2rem;
   cursor: pointer;
   transition: all 0.25s ease;
   font-weight: bold;
-  box-shadow: 0 2px 6px rgba(30, 64, 175, 0.25);
+  box-shadow: 0 2px 6px rgba(104, 154, 75, 0.3);
 }
 
 .nav-button:hover {
   background: var(--secondary-color);
   transform: scale(1.08);
-  box-shadow: 0 4px 10px rgba(14, 165, 233, 0.35);
+  box-shadow: 0 4px 10px rgba(139, 195, 74, 0.4);
 }
 
 /* Container */
 .schedule-container {
-  background: white;
+  background: var(--dark-bg-alt);
   border: 1px solid var(--border-color);
   border-radius: 10px;
   padding: 0;
@@ -67,17 +67,18 @@
 .schedule-table {
   width: 100%;
   border-collapse: collapse;
-  background: white;
+  background: var(--dark-bg-alt);
   font-size: 0.9rem;
   table-layout: fixed;
+  color: var(--text-on-dark);
 }
 
 /* ===========================
    THEAD
    =========================== */
 .schedule-table thead tr {
-  background: linear-gradient(135deg, #1e40af 0%, #2563eb 60%, #0ea5e9 100%);
-  color: white;
+  background: linear-gradient(135deg, #141514 0%, #3a4a2e 60%, #689a4b 100%);
+  color: #ffffff;
   position: sticky;
   top: 0;
   z-index: 10;
@@ -88,7 +89,7 @@
   text-align: center;
   font-weight: 700;
   font-size: 0.88rem;
-  border-right: 1px solid rgba(255, 255, 255, 0.18);
+  border-right: 1px solid rgba(255, 255, 255, 0.15);
   line-height: 1.4;
   vertical-align: middle;
 }
@@ -112,7 +113,7 @@
   min-width: 110px;
   text-align: center;
   font-size: 0.88rem;
-  border-right: 1px solid rgba(255, 255, 255, 0.18);
+  border-right: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 /* Cột ngày */
@@ -126,19 +127,19 @@
 
 /* Highlight Chủ nhật */
 .sunday-header {
-  background: rgba(239, 68, 68, 0.25) !important;
+  background: rgba(239, 68, 68, 0.28) !important;
 }
 
 /* ===========================
    TBODY ROWS
    =========================== */
 .schedule-table tbody tr {
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--border-color);
   transition: background-color 0.15s ease;
 }
 
 .schedule-table tbody tr:hover {
-  background-color: rgba(30, 64, 175, 0.025);
+  background-color: rgba(104, 154, 75, 0.06);
 }
 
 .schedule-table tbody tr:last-child {
@@ -150,9 +151,9 @@
    =========================== */
 .room-label-cell {
   text-align: center;
-  background: linear-gradient(180deg, #f0f4ff 0%, #e8efff 100%);
+  background: linear-gradient(180deg, #1c1f1a 0%, #23261f 100%);
   font-weight: 700;
-  border-right: 2px solid #1e40af;
+  border-right: 2px solid var(--primary-color);
   vertical-align: middle;
   padding: 10px 8px;
   width: 110px;
@@ -160,7 +161,7 @@
 }
 
 .room-name {
-  color: #1e40af;
+  color: var(--secondary-color);
   font-size: 1rem;
   font-weight: 800;
   letter-spacing: 0.02em;
@@ -168,14 +169,14 @@
 
 .room-sub {
   font-size: 0.75rem;
-  color: #4b5563;
+  color: var(--text-light);
   margin-top: 3px;
   font-weight: 500;
 }
 
 .room-cap {
   font-size: 0.72rem;
-  color: #6b7280;
+  color: var(--text-light);
   margin-top: 4px;
   font-weight: 400;
 }
@@ -185,8 +186,8 @@
    =========================== */
 .tiet-cell {
   text-align: center;
-  background-color: #f9fafb;
-  border-right: 1px solid #d1d5db;
+  background-color: #1c1f1a;
+  border-right: 1px solid var(--border-color);
   padding: 8px 6px;
   vertical-align: middle;
   width: 120px;
@@ -196,7 +197,7 @@
 .tiet-label {
   display: block;
   font-weight: 600;
-  color: #1f2937;
+  color: var(--text-on-dark);
   font-size: 0.85rem;
   line-height: 1.3;
 }
@@ -204,7 +205,7 @@
 .tiet-time {
   display: block;
   font-size: 0.75rem;
-  color: #6b7280;
+  color: var(--text-light);
   margin-top: 2px;
   line-height: 1.2;
 }
@@ -214,7 +215,7 @@
    =========================== */
 .schedule-table td.schedule-cell {
   padding: 8px 6px;
-  border-right: 1px solid #e5e7eb;
+  border-right: 1px solid var(--border-color);
   text-align: center;
   vertical-align: middle;
   min-height: 46px;
@@ -225,6 +226,7 @@
   position: relative;
   font-size: 0.82rem;
   min-width: 105px;
+  color: var(--text-on-dark);
 }
 
 .schedule-table td.schedule-cell:last-child {
@@ -232,37 +234,37 @@
 }
 
 .schedule-table td.schedule-cell:hover:not(.dash-cell):not(.booked) {
-  background-color: rgba(30, 64, 175, 0.06);
-  box-shadow: inset 0 0 0 2px rgba(30, 64, 175, 0.2);
+  background-color: rgba(104, 154, 75, 0.12);
+  box-shadow: inset 0 0 0 2px rgba(104, 154, 75, 0.3);
 }
 
 /* Ô trống (có thể đặt) */
 .schedule-cell.empty {
-  background-color: #ffffff;
+  background-color: var(--dark-bg-alt);
   cursor: pointer;
 }
 
 /* Ô -- ... -- (Chủ nhật / slot đặc biệt) */
 .schedule-cell.dash-cell {
-  background-color: #f9fafb;
-  color: #9ca3af;
+  background-color: #1c1f1a;
+  color: #6b7268;
   font-size: 0.78rem;
   cursor: default;
 }
 
 .schedule-cell.dash-cell:hover {
-  background-color: #f9fafb;
+  background-color: #1c1f1a;
   box-shadow: none;
 }
 
 /* Ô đã được đặt */
 .schedule-cell.booked {
-  background-color: rgba(59, 130, 246, 0.08);
+  background-color: rgba(104, 154, 75, 0.15);
   cursor: pointer;
 }
 
 .schedule-cell.booked:hover {
-  background-color: rgba(59, 130, 246, 0.15);
+  background-color: rgba(104, 154, 75, 0.25);
 }
 
 /* ===========================
@@ -279,19 +281,19 @@
 .booking-org {
   font-weight: 700;
   font-size: 0.8rem;
-  color: #1d4ed8;
+  color: var(--secondary-color);
   line-height: 1.2;
 }
 
 .booking-cap-info {
   font-size: 0.75rem;
-  color: #374151;
+  color: var(--text-on-dark);
   font-weight: 500;
 }
 
 .booking-purpose {
   font-size: 0.75rem;
-  color: #4b5563;
+  color: var(--text-light);
   line-height: 1.3;
   text-align: center;
   white-space: normal;
@@ -304,9 +306,9 @@
 .schedule-legend {
   margin-top: 18px;
   padding: 14px 18px;
-  background: #f9fafb;
+  background: #1c1f1a;
   border-radius: 8px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border-color);
   display: flex;
   gap: 24px;
   align-items: center;
@@ -314,7 +316,7 @@
 }
 
 .schedule-legend h3 {
-  color: var(--text-dark);
+  color: var(--text-on-dark);
   font-size: 0.95rem;
   margin: 0;
   font-weight: 600;
@@ -325,7 +327,7 @@
   align-items: center;
   gap: 8px;
   font-size: 0.88rem;
-  color: #374151;
+  color: var(--text-light);
 }
 
 .status-badge {
@@ -338,13 +340,13 @@
 }
 
 .status-badge.available {
-  background: white;
-  border-color: #d1d5db;
+  background: var(--dark-bg-alt);
+  border-color: var(--border-color);
 }
 
 .status-badge.booked {
-  background: rgba(59, 130, 246, 0.15);
-  border-color: #3b82f6;
+  background: rgba(104, 154, 75, 0.2);
+  border-color: var(--primary-color);
 }
 
 .status-badge.partial {
