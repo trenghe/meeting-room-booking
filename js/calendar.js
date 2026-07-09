@@ -305,7 +305,7 @@ function showBookingDetails(booking) {
   // Get room name
   const rooms = getRooms();
   const room = rooms.find((r) => r.id === booking.room);
-  const roomName = room ? `${room.name} - ${room.roomName}` : booking.room;
+  const roomName = room ? `${room.name} ` : booking.room;
 
   const dateObj = new Date(booking.date);
   const dateDisplay = dateObj.toLocaleDateString("vi-VN", { weekday: "long", year: "numeric", month: "long", day: "numeric" });
@@ -328,25 +328,14 @@ function showBookingDetails(booking) {
             <div class="booking-detail-value">${formatTime(parseInt(booking.startTime))} - ${formatTime(parseInt(booking.endTime))}</div>
         </div>
         <div class="booking-detail-item">
-            <div class="booking-detail-label">Mục Đích:</div>
+            <div class="booking-detail-label">Nội Dung:</div>
             <div class="booking-detail-value">${booking.purpose}</div>
         </div>
         <div class="booking-detail-item">
             <div class="booking-detail-label">Người Đặt:</div>
             <div class="booking-detail-value">${booking.organizerName}</div>
         </div>
-        <div class="booking-detail-item">
-            <div class="booking-detail-label">SĐT:</div>
-            <div class="booking-detail-value">${booking.organizerPhone}</div>
-        </div>
-        <div class="booking-detail-item">
-            <div class="booking-detail-label">Email:</div>
-            <div class="booking-detail-value">${booking.organizerEmail}</div>
-        </div>
-        <div class="booking-detail-item">
-            <div class="booking-detail-label">Số người:</div>
-            <div class="booking-detail-value">${booking.attendeesCount}</div>
-        </div>
+        
         ${
           booking.notes
             ? `<div class="booking-detail-item">

@@ -6,9 +6,6 @@ let bookingFormData = {
   endTime: "",
   purpose: "",
   organizerName: "",
-  organizerPhone: "",
-  organizerEmail: "",
-  attendeesCount: "",
   notes: "",
 };
 
@@ -226,9 +223,6 @@ async function handleBookingSubmit(e) {
       endTime: String(parseInt(document.getElementById("endTime").value)), // Convert to string
       purpose: document.getElementById("purpose").value,
       organizerName: document.getElementById("organizerName").value,
-      organizerPhone: document.getElementById("organizerPhone").value,
-      organizerEmail: document.getElementById("organizerEmail").value,
-      attendeesCount: document.getElementById("attendeesCount").value ? parseInt(document.getElementById("attendeesCount").value) : "",
       notes: document.getElementById("notes").value,
     };
 

@@ -1,5 +1,6 @@
 /* ===========================
    SCHEDULE / CALENDAR STYLES
+   (Bảng màu xanh lá - trắng, dễ đọc)
    =========================== */
 
 /* Section wrapper */
@@ -23,7 +24,7 @@
 .schedule-header h2 {
   min-width: 260px;
   text-align: center;
-  color: var(--secondary-color);
+  color: var(--primary-color);
   font-size: 1.5rem;
   font-weight: 700;
 }
@@ -49,8 +50,8 @@
 
 /* Container */
 .schedule-container {
-  background: var(--dark-bg-alt);
-  border: 1px solid var(--border-color);
+  background: #ffffff;
+  border: 1px solid #d9e3d3;
   border-radius: 10px;
   padding: 0;
   box-shadow: var(--shadow-lg);
@@ -67,17 +68,17 @@
 .schedule-table {
   width: 100%;
   border-collapse: collapse;
-  background: var(--dark-bg-alt);
+  background: #ffffff;
   font-size: 0.9rem;
   table-layout: fixed;
-  color: var(--text-on-dark);
+  color: var(--text-dark);
 }
 
 /* ===========================
    THEAD
    =========================== */
 .schedule-table thead tr {
-  background: linear-gradient(135deg, #141514 0%, #3a4a2e 60%, #689a4b 100%);
+  background: linear-gradient(135deg, #4f7a37 0%, #689a4b 60%, #8bc34a 100%);
   color: #ffffff;
   position: sticky;
   top: 0;
@@ -89,7 +90,7 @@
   text-align: center;
   font-weight: 700;
   font-size: 0.88rem;
-  border-right: 1px solid rgba(255, 255, 255, 0.15);
+  border-right: 1px solid rgba(255, 255, 255, 0.25);
   line-height: 1.4;
   vertical-align: middle;
 }
@@ -113,7 +114,7 @@
   min-width: 110px;
   text-align: center;
   font-size: 0.88rem;
-  border-right: 1px solid rgba(255, 255, 255, 0.15);
+  border-right: 1px solid rgba(255, 255, 255, 0.25);
 }
 
 /* Cột ngày */
@@ -127,19 +128,24 @@
 
 /* Highlight Chủ nhật */
 .sunday-header {
-  background: rgba(239, 68, 68, 0.28) !important;
+  background: rgba(239, 68, 68, 0.35) !important;
 }
 
 /* ===========================
    TBODY ROWS
    =========================== */
 .schedule-table tbody tr {
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid #e5ece0;
   transition: background-color 0.15s ease;
 }
 
 .schedule-table tbody tr:hover {
-  background-color: rgba(104, 154, 75, 0.06);
+  background-color: rgba(104, 154, 75, 0.08);
+}
+
+/* Đảm bảo ô đang được rê chuột luôn đổi màu mượt mà và tự trở lại bình thường khi rê ra */
+.schedule-table td.schedule-cell {
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .schedule-table tbody tr:last-child {
@@ -147,47 +153,11 @@
 }
 
 /* ===========================
-   ROOM CELL (cột Phòng)
-   =========================== */
-.room-label-cell {
-  text-align: center;
-  background: linear-gradient(180deg, #1c1f1a 0%, #23261f 100%);
-  font-weight: 700;
-  border-right: 2px solid var(--primary-color);
-  vertical-align: middle;
-  padding: 10px 8px;
-  width: 110px;
-  min-width: 100px;
-}
-
-.room-name {
-  color: var(--secondary-color);
-  font-size: 1rem;
-  font-weight: 800;
-  letter-spacing: 0.02em;
-}
-
-.room-sub {
-  font-size: 0.75rem;
-  color: var(--text-light);
-  margin-top: 3px;
-  font-weight: 500;
-}
-
-.room-cap {
-  font-size: 0.72rem;
-  color: var(--text-light);
-  margin-top: 4px;
-  font-weight: 400;
-}
-
-/* ===========================
    TIET CELL (cột Tiết)
    =========================== */
 .tiet-cell {
   text-align: center;
-  background-color: #1c1f1a;
-  border-right: 1px solid var(--border-color);
+  border-right: 1px solid #d9e3d3;
   padding: 8px 6px;
   vertical-align: middle;
   width: 120px;
@@ -197,7 +167,7 @@
 .tiet-label {
   display: block;
   font-weight: 600;
-  color: var(--text-on-dark);
+  color: var(--text-dark);
   font-size: 0.85rem;
   line-height: 1.3;
 }
@@ -205,7 +175,7 @@
 .tiet-time {
   display: block;
   font-size: 0.75rem;
-  color: var(--text-light);
+  color: #6b7280;
   margin-top: 2px;
   line-height: 1.2;
 }
@@ -215,7 +185,7 @@
    =========================== */
 .schedule-table td.schedule-cell {
   padding: 8px 6px;
-  border-right: 1px solid var(--border-color);
+  border-right: 1px solid #e5ece0;
   text-align: center;
   vertical-align: middle;
   min-height: 46px;
@@ -226,45 +196,43 @@
   position: relative;
   font-size: 0.82rem;
   min-width: 105px;
-  color: var(--text-on-dark);
+  color: var(--text-dark);
 }
 
 .schedule-table td.schedule-cell:last-child {
   border-right: none;
 }
 
-.schedule-table td.schedule-cell:hover:not(.dash-cell):not(.booked) {
-  background-color: rgba(104, 154, 75, 0.12);
-  box-shadow: inset 0 0 0 2px rgba(104, 154, 75, 0.3);
+.schedule-table td.schedule-cell:hover:not(.dash-cell) {
+  background-color: rgba(79, 122, 55, 0.28) !important;
+  box-shadow: inset 0 0 0 2px var(--primary-color);
 }
 
-/* Ô trống (có thể đặt) */
-.schedule-cell.empty {
-  background-color: var(--dark-bg-alt);
-  cursor: pointer;
+.schedule-table td.schedule-cell.booked:hover {
+  background-color: rgba(79, 122, 55, 0.4) !important;
 }
 
 /* Ô -- ... -- (Chủ nhật / slot đặc biệt) */
 .schedule-cell.dash-cell {
-  background-color: #1c1f1a;
-  color: #6b7268;
+  background-color: #f3f5f1;
+  color: #9ca3af;
   font-size: 0.78rem;
   cursor: default;
 }
 
 .schedule-cell.dash-cell:hover {
-  background-color: #1c1f1a;
+  background-color: #f3f5f1;
   box-shadow: none;
 }
 
 /* Ô đã được đặt */
 .schedule-cell.booked {
-  background-color: rgba(104, 154, 75, 0.15);
+  background-color: rgba(104, 154, 75, 0.18);
   cursor: pointer;
 }
 
 .schedule-cell.booked:hover {
-  background-color: rgba(104, 154, 75, 0.25);
+  background-color: rgba(104, 154, 75, 0.3);
 }
 
 /* ===========================
@@ -281,23 +249,88 @@
 .booking-org {
   font-weight: 700;
   font-size: 0.8rem;
-  color: var(--secondary-color);
+  color: #3d6129;
   line-height: 1.2;
 }
 
 .booking-cap-info {
   font-size: 0.75rem;
-  color: var(--text-on-dark);
+  color: #374151;
   font-weight: 500;
 }
 
 .booking-purpose {
   font-size: 0.75rem;
-  color: var(--text-light);
+  color: #4b5563;
   line-height: 1.3;
   text-align: center;
   white-space: normal;
   word-break: break-word;
+}
+
+/* ===========================
+   PHÂN BIỆT 2 PHÒNG THEO SẮC ĐỘ XANH LÁ
+   =========================== */
+
+/* Phòng Lầu 1 - xanh lá đậm */
+.room-row-floor1 {
+  background-color: rgba(79, 122, 55, 0.045);
+}
+
+.room-row-floor1 .schedule-cell.empty,
+.room-row-floor1 .tiet-cell {
+  background-color: #f4f8f1;
+}
+
+.room-row-floor1 .room-label-cell {
+  background: linear-gradient(180deg, #eaf1e4 0%, #dcebd2 100%);
+  border-right: 3px solid #4f7a37;
+  text-align: center;
+  font-weight: 700;
+  vertical-align: middle;
+  padding: 10px 8px;
+  width: 110px;
+  min-width: 100px;
+}
+
+.room-row-floor1 .room-name {
+  color: #4f7a37;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+/* Phòng Lầu 4 - xanh lá nhạt hơn */
+.room-row-floor4 {
+  background-color: rgba(139, 195, 74, 0.06);
+}
+
+.room-row-floor4 .schedule-cell.empty,
+.room-row-floor4 .tiet-cell {
+  background-color: #f6faf1;
+}
+
+.room-row-floor4 .room-label-cell {
+  background: linear-gradient(180deg, #f1f8e9 0%, #e6f4d7 100%);
+  border-right: 3px solid #8bc34a;
+  text-align: center;
+  font-weight: 700;
+  vertical-align: middle;
+  padding: 10px 8px;
+  width: 110px;
+  min-width: 100px;
+}
+
+.room-row-floor4 .room-name {
+  color: #6b9c3a;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+/* Đường kẻ ngang đậm phân cách giữa 2 phòng */
+.room-divider td {
+  border-top: 3px solid var(--primary-color);
 }
 
 /* ===========================
@@ -306,9 +339,9 @@
 .schedule-legend {
   margin-top: 18px;
   padding: 14px 18px;
-  background: #1c1f1a;
+  background: #f6f9f4;
   border-radius: 8px;
-  border: 1px solid var(--border-color);
+  border: 1px solid #d9e3d3;
   display: flex;
   gap: 24px;
   align-items: center;
@@ -316,7 +349,7 @@
 }
 
 .schedule-legend h3 {
-  color: var(--text-on-dark);
+  color: var(--text-dark);
   font-size: 0.95rem;
   margin: 0;
   font-weight: 600;
@@ -327,7 +360,7 @@
   align-items: center;
   gap: 8px;
   font-size: 0.88rem;
-  color: var(--text-light);
+  color: #374151;
 }
 
 .status-badge {
@@ -340,18 +373,13 @@
 }
 
 .status-badge.available {
-  background: var(--dark-bg-alt);
-  border-color: var(--border-color);
+  background: #ffffff;
+  border-color: #d1d5db;
 }
 
 .status-badge.booked {
-  background: rgba(104, 154, 75, 0.2);
+  background: rgba(104, 154, 75, 0.25);
   border-color: var(--primary-color);
-}
-
-.status-badge.partial {
-  background: rgba(245, 158, 11, 0.2);
-  border-color: var(--warning-color);
 }
 
 /* ===========================
@@ -392,7 +420,8 @@
   .schedule-table td {
     padding: 6px 4px;
   }
-  .room-label-cell {
+  .room-row-floor1 .room-label-cell,
+  .room-row-floor4 .room-label-cell {
     width: 70px;
     min-width: 70px;
   }
@@ -411,41 +440,4 @@
     gap: 14px;
     font-size: 0.82rem;
   }
-}
-
-/* ===========================
-   PHÂN BIỆT 2 PHÒNG THEO MÀU
-   =========================== */
-
-/* Phòng Lầu 1 - tông xanh lá đậm (primary) */
-.room-row-floor1 {
-  background-color: rgba(104, 154, 75, 0.05);
-}
-
-.room-row-floor1 .room-label-cell {
-  background: linear-gradient(180deg, #1c2a17 0%, #223019 100%);
-  border-right: 2px solid var(--primary-color);
-}
-
-.room-row-floor1 .room-name {
-  color: var(--primary-color);
-}
-
-/* Phòng Lầu 4 - tông xanh lá nhạt (secondary) để phân biệt */
-.room-row-floor4 {
-  background-color: rgba(139, 195, 74, 0.06);
-}
-
-.room-row-floor4 .room-label-cell {
-  background: linear-gradient(180deg, #1e2419 0%, #262f1c 100%);
-  border-right: 2px solid var(--secondary-color);
-}
-
-.room-row-floor4 .room-name {
-  color: var(--secondary-color);
-}
-
-/* Đường kẻ ngang đậm phân cách giữa 2 phòng */
-.room-divider td {
-  border-top: 3px solid var(--primary-color);
 }

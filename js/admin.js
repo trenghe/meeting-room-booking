@@ -1,108 +1,152 @@
+// ===============================
 // Admin / Management Functionality
+// ===============================
 
 function initAdmin() {
   renderAdminBookings();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  // If firebase is initialized asynchronously, we might need to wait for it.
-  // Actually, bookings are loaded from Firebase in firebase-config.js.
-  // When bookings are loaded, they call updateScheduleDisplay if it exists.
-  // We can override updateScheduleDisplay to update our admin table.
+  // Khi Firebase cập nhật dữ liệu sẽ tự render lại bảng
   window.updateScheduleDisplay = renderAdminBookings;
-  
-  // Also try to render initially
+
+  // Render lần đầu
   setTimeout(renderAdminBookings, 1000);
 });
 
+// ===============================
+// Format Date
+// yyyy-MM-dd -> dd/MM/yyyy
+// ===============================
+function formatDate(dateString) {
+  if (!dateString) return "";
+
+  const date = new Date(dateString);
+
+  if (isNaN(date.getTime())) return dateString;
+
+  return date.toLocaleDateString("vi-VN");
+}
+
+// ===============================
+// Render Admin Table
+// ===============================
 function renderAdminBookings() {
-  const tbody = document.getElementById('adminBookingsBody');
+  const tbody = document.getElementById("adminBookingsBody");
+
   if (!tbody) return;
-  
-  tbody.innerHTML = '';
-  
+
+  tbody.innerHTML = "";
+
   if (!bookings || Object.keys(bookings).length === 0) {
-    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 20px;">Không có lịch họp nào.</td></tr>';
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="7" style="text-align:center;padding:20px;">
+          Không có lịch họp nào.
+        </td>
+      </tr>
+    `;
     return;
   }
-  
-  // Sort bookings by date descending
+
+  // Sắp xếp theo ngày mới nhất
   const sortedBookings = Object.values(bookings).sort((a, b) => new Date(b.date) - new Date(a.date));
-  
-  sortedBookings.forEach(booking => {
-    const tr = document.createElement('tr');
-    
-    // Style alternating rows
-    tr.style.borderBottom = '1px solid #eee';
-    
-    const roomName = booking.room === 'floor1' ? 'Phòng họp Lầu 1' : 'Phòng họp Lầu 4';
-    
-    // Safety check for missing properties
+
+  sortedBookings.forEach((booking, index) => {
+    const tr = document.createElement("tr");
+
+    const roomName = booking.room === "floor1" ? "Phòng họp Lầu 1" : "Phòng họp Lầu 4";
+
     const startTime = parseInt(booking.startTime) || 0;
     const endTime = parseInt(booking.endTime) || 0;
+
     const timeStr = `${formatTime(startTime)} - ${formatTime(endTime)}`;
-    
+
     tr.innerHTML = `
-      <td style="padding: 12px;">${booking.date}</td>
-      <td style="padding: 12px;">${roomName}</td>
-      <td style="padding: 12px;">${timeStr}</td>
-      <td style="padding: 12px;">${booking.organizerName || ''}</td>
-      <td style="padding: 12px;">${booking.purpose || ''}</td>
-      <td style="padding: 12px;">
-        <button onclick="deleteBookingHandler('${booking.id}')" style="background-color: #ff4d4f; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">
+      <td><strong>${index + 1}</strong></td>
+      <td>${formatDate(booking.date)}</td>
+      <td>${roomName}</td>
+      <td>${timeStr}</td>
+      <td>${booking.organizerName || ""}</td>
+      <td>${booking.purpose || ""}</td>
+      <td>
+        <button
+          class="action-btn delete"
+          onclick="deleteBookingHandler('${booking.id}')">
           Xóa
         </button>
       </td>
     `;
+
     tbody.appendChild(tr);
   });
 }
 
+// ===============================
+// Delete Booking
+// ===============================
 function deleteBookingHandler(id) {
-  if (confirm('Bạn có chắc chắn muốn xóa lịch họp này không?')) {
-    deleteBooking(id).then(res => {
-      if (res.success) {
-        showNotification('✅ Đã xóa lịch họp thành công', 'success');
-        // Re-render both admin table and calendar
-        renderAdminBookings();
-        if (window.updateScheduleDisplay) {
-            updateScheduleDisplay();
-        }
-      } else {
-        showNotification('❌ Lỗi khi xóa: ' + res.error, 'error');
+  if (!confirm("Bạn có chắc chắn muốn xóa lịch họp này không?")) return;
+
+  deleteBooking(id).then((res) => {
+    if (res.success) {
+      showNotification("✅ Đã xóa lịch họp thành công", "success");
+
+      renderAdminBookings();
+
+      if (window.updateScheduleDisplay) {
+        updateScheduleDisplay();
       }
-    });
-  }
+    } else {
+      showNotification("❌ Lỗi khi xóa: " + res.error, "error");
+    }
+  });
 }
 
-// Helper function to show notifications
+// ===============================
+// Notification
+// ===============================
 function showNotification(message, type = "info") {
   const notification = document.createElement("div");
+
   notification.className = `booking-status ${type}`;
+
   notification.textContent = message;
+
   notification.style.position = "fixed";
   notification.style.top = "20px";
   notification.style.right = "20px";
   notification.style.zIndex = "9999";
   notification.style.maxWidth = "400px";
-  notification.style.padding = "15px";
+  notification.style.padding = "15px 20px";
   notification.style.borderRadius = "8px";
-  notification.style.boxShadow = "0 4px 6px rgba(0,0,0,0.1)";
-  
-  if (type === 'success') {
-      notification.style.backgroundColor = "#4caf50";
-      notification.style.color = "white";
-  } else if (type === 'error') {
-      notification.style.backgroundColor = "#f44336";
-      notification.style.color = "white";
+  notification.style.boxShadow = "0 8px 20px rgba(0,0,0,.2)";
+  notification.style.fontWeight = "600";
+
+  switch (type) {
+    case "success":
+      notification.style.background = "#4caf50";
+      notification.style.color = "#fff";
+      break;
+
+    case "error":
+      notification.style.background = "#f44336";
+      notification.style.color = "#fff";
+      break;
+
+    default:
+      notification.style.background = "#2196f3";
+      notification.style.color = "#fff";
   }
 
   document.body.appendChild(notification);
 
   setTimeout(() => {
     notification.remove();
-  }, 5000);
+  }, 4000);
 }
 
-// Attach initAdmin to window so it can be called from main.js
+// ===============================
+// Export
+// ===============================
 window.initAdmin = initAdmin;
