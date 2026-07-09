@@ -60,6 +60,8 @@
 
 .schedule-table-wrapper {
   overflow-x: auto;
+  overflow-y: auto;
+  max-height: 88vh;
 }
 
 /* ===========================
@@ -78,19 +80,20 @@
    THEAD
    =========================== */
 .schedule-table thead tr {
-  background: linear-gradient(135deg, #4f7a37 0%, #689a4b 60%, #8bc34a 100%);
   color: #ffffff;
-  position: sticky;
-  top: 0;
-  z-index: 10;
 }
 
 .schedule-table th {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: #619441; /* Solid green to ensure sticky background works reliably */
   padding: 13px 8px;
   text-align: center;
   font-weight: 700;
   font-size: 0.88rem;
   border-right: 1px solid rgba(255, 255, 255, 0.25);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
   line-height: 1.4;
   vertical-align: middle;
 }
@@ -126,9 +129,9 @@
   font-size: 0.88rem;
 }
 
-/* Highlight Chủ nhật */
+/* Highlight Chủ nhật (removed per request) */
 .sunday-header {
-  background: rgba(239, 68, 68, 0.35) !important;
+  /* background: rgba(239, 68, 68, 0.35) !important; */
 }
 
 /* ===========================
@@ -417,16 +420,49 @@
   .schedule-table td {
     padding: 6px 4px;
   }
+
+  /* Cố định cột Phòng và cột Khung giờ khi scroll ngang trên mobile */
+  .room-header {
+    width: 70px;
+    min-width: 70px;
+    position: sticky;
+    left: 0;
+    z-index: 20 !important;
+  }
   .room-row-floor1 .room-label-cell,
   .room-row-floor4 .room-label-cell {
     width: 70px;
     min-width: 70px;
+    position: sticky;
+    left: 0;
+    z-index: 5;
   }
-  .tiet-cell,
   .tiet-header {
     width: 85px;
     min-width: 80px;
+    position: sticky;
+    left: 70px;
+    z-index: 20 !important;
   }
+  .tiet-cell {
+    width: 85px;
+    min-width: 80px;
+    position: sticky;
+    left: 70px;
+    z-index: 5;
+  }
+  /* Đổ bóng nhẹ để tách biệt cột cố định với nội dung cuộn */
+  .tiet-header::after, .tiet-cell::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -4px;
+    bottom: 0;
+    width: 4px;
+    box-shadow: inset 4px 0 4px -4px rgba(0,0,0,0.3);
+    pointer-events: none;
+  }
+
   .day-header {
     min-width: 72px;
   }
