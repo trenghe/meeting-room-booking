@@ -118,16 +118,31 @@ async function deleteBooking(bookingId) {
   }
 }
 
+// Helper function to update booking
+async function updateBooking(bookingId, updatedData) {
+  try {
+    const bookingPath = `bookings/${bookingId}`;
+    await database.ref(bookingPath).update(updatedData);
+    console.log("Booking updated:", bookingId);
+    return { success: true };
+  } catch (error) {
+    console.error("Error updating booking:", error);
+    return { success: false, error: error.message };
+  }
+}
+
 // Helper function to get bookings for a specific date and room
 function getBookingsForDateAndRoom(date, room) {
   return Object.values(bookings).filter((booking) => booking.date === date && booking.room === room);
 }
 
 // Helper function to check if time slot is available
-function isTimeSlotAvailable(date, room, startTime, endTime) {
+function isTimeSlotAvailable(date, room, startTime, endTime, excludeBookingId = null) {
   const dateBookings = getBookingsForDateAndRoom(date, room);
 
   for (let booking of dateBookings) {
+    if (excludeBookingId && booking.id === excludeBookingId) continue;
+    
     const bookingStart = parseInt(booking.startTime);
     const bookingEnd = parseInt(booking.endTime);
     const reqStart = parseInt(startTime);

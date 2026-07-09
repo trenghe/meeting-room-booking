@@ -9,6 +9,7 @@
     <!-- Tải các CSS cần thiết -->
     <link rel="stylesheet" href="css/styles.css" />
     <link rel="stylesheet" href="css/admin.css" />
+    <link rel="stylesheet" href="css/modal.css" />
   </head>
   <body>
     <div class="container">
@@ -50,6 +51,58 @@
           </div>
         </div>
       </section>
+    </div>
+
+    <!-- Edit Booking Modal -->
+    <div id="editBookingModal" class="modal hidden">
+      <div class="modal-content" style="background: var(--dark-bg-alt);">
+        <span class="modal-close" onclick="closeEditModal()">&times;</span>
+        <h2>Sửa Lịch Đặt Phòng</h2>
+        <form id="editBookingForm" class="booking-form" style="margin-top:20px;">
+          <input type="hidden" id="editBookingId" />
+          
+          <div class="form-group">
+            <label for="editRoomSelect">Chọn Phòng:</label>
+            <select id="editRoomSelect" required>
+              <option value="floor1">Phòng họp Lầu 1</option>
+              <option value="floor4">Phòng họp Lầu 4</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="editBookingDate">Ngày Họp:</label>
+            <input type="date" id="editBookingDate" required />
+          </div>
+
+          <div class="form-row" style="display:flex; gap:10px;">
+            <div class="form-group" style="flex:1;">
+              <label for="editStartTime">Giờ Bắt Đầu:</label>
+              <select id="editStartTime" required></select>
+            </div>
+            <div class="form-group" style="flex:1;">
+              <label for="editEndTime">Giờ Kết Thúc:</label>
+              <select id="editEndTime" required></select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="editPurpose">Nội dung cuộc họp <span class="required">*</span></label>
+            <input type="text" id="editPurpose" required maxlength="1000" />
+          </div>
+
+          <div class="form-group">
+            <label for="editOrganizerName">Người Đặt:</label>
+            <input type="text" id="editOrganizerName" required />
+          </div>
+
+          <div class="form-group">
+            <label for="editNotes">Ghi Chú:</label>
+            <textarea id="editNotes"></textarea>
+          </div>
+
+          <button type="submit" class="submit-btn" style="background:#689a4b; color: white;">Lưu Thay Đổi</button>
+        </form>
+      </div>
     </div>
 
     <!-- Scripts -->
