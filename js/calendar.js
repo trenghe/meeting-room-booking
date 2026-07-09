@@ -348,6 +348,24 @@ function showBookingDetails(booking) {
         }
     </div>`;
 
+  // Create Google Calendar Link
+  const gcalStartDate = booking.date.replace(/-/g, '') + 'T' + String(Math.floor(parseInt(booking.startTime) / 100)).padStart(2, '0') + String(parseInt(booking.startTime) % 100).padStart(2, '0') + '00';
+  const gcalEndDate = booking.date.replace(/-/g, '') + 'T' + String(Math.floor(parseInt(booking.endTime) / 100)).padStart(2, '0') + String(parseInt(booking.endTime) % 100).padStart(2, '0') + '00';
+  
+  const gcalTitle = encodeURIComponent(booking.purpose || "Họp");
+  const gcalDetails = encodeURIComponent(`Người đặt: ${booking.organizerName || ""}\n${booking.notes || ""}`);
+  const gcalLocation = encodeURIComponent(roomName || "");
+  
+  const gcalLink = `https://calendar.google.com/calendar/r/eventedit?text=${gcalTitle}&dates=${gcalStartDate}/${gcalEndDate}&details=${gcalDetails}&location=${gcalLocation}`;
+
+  html += `
+    <div style="margin-top: 20px; text-align: center;">
+      <a href="${gcalLink}" target="_blank" rel="noopener noreferrer" style="display: inline-block; padding: 10px 20px; background-color: #4285f4; color: white; text-decoration: none; border-radius: 6px; font-weight: bold; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#3367d6'" onmouseout="this.style.backgroundColor='#4285f4'">
+        📅 Thêm vào Google Calendar
+      </a>
+    </div>
+  `;
+
   modalBody.innerHTML = html;
   modal.classList.remove("hidden");
 }

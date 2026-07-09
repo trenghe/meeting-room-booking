@@ -291,11 +291,30 @@ async function handleBookingSubmit(e) {
       }
       
       let currentDate = new Date(startDate);
+      const targetWeekday = startDate.getDay();
+      const occurrence = Math.floor((startDate.getDate() - 1) / 7) + 1;
+      let currentMonthOffset = 0;
+
       while (true) {
         if (repeatType === "weekly") {
           currentDate.setDate(currentDate.getDate() + 7);
         } else if (repeatType === "monthly") {
-          currentDate.setMonth(currentDate.getMonth() + 1);
+          currentMonthOffset++;
+          let targetMonth = startDate.getMonth() + currentMonthOffset;
+          
+          let firstDayOfMonth = new Date(startDate.getFullYear(), targetMonth, 1);
+          let firstWeekday = firstDayOfMonth.getDay();
+          let daysToAdd = (targetWeekday - firstWeekday + 7) % 7;
+          
+          let targetDate = 1 + daysToAdd + (occurrence - 1) * 7;
+          let daysInMonth = new Date(firstDayOfMonth.getFullYear(), firstDayOfMonth.getMonth() + 1, 0).getDate();
+          
+          // Fall back to the last occurrence if the month doesn't have 5 occurrences
+          if (targetDate > daysInMonth) {
+             targetDate -= 7;
+          }
+          
+          currentDate = new Date(firstDayOfMonth.getFullYear(), firstDayOfMonth.getMonth(), targetDate);
         }
         
         if (currentDate > endDate) {
