@@ -179,7 +179,7 @@ function updateScheduleDisplay() {
               const nextSlot = timeSlots[k];
               const bookEnd = Math.floor(parseInt(booking.endTime) / 100) * 60 + (parseInt(booking.endTime) % 100);
               const nextSlotStart = nextSlot.hour * 60 + nextSlot.min;
-              
+
               if (bookEnd > nextSlotStart) {
                 rowspan++;
               } else {
@@ -201,9 +201,12 @@ function updateScheduleDisplay() {
                     `;
             cell.addEventListener("click", () => showBookingDetails(booking));
           } else if (weekday === 0) {
-            // Chủ nhật → hiển thị dấu gạch
-            cell.classList.add("dash-cell");
+            cell.classList.add("empty");
+            cell.innerHTML = "";
 
+            cell.addEventListener("click", () => {
+              selectBookingSlot(dateStr, room.id, slot);
+            });
           } else {
             cell.classList.add("empty");
             cell.innerHTML = "";
@@ -269,32 +272,31 @@ function getBookingForSlot(dateStr, roomId, slot) {
 
 // Select booking slot
 function selectBookingSlot(dateStr, roomId, slot) {
-  // Skip if break time
-  if (slot.isBreak) return;
+  // Chuyển sang tab Đặt phòng
+  document.querySelector('[data-tab="booking"]').click();
 
-  // Switch to booking tab
-  const bookingTab = document.querySelector('[data-tab="booking"]');
-  if (bookingTab) bookingTab.click();
-
-  // Fill in the form
+  // Chọn ngày
   const bookingDateInput = document.getElementById("bookingDate");
   if (bookingDateInput._flatpickr) {
     bookingDateInput._flatpickr.setDate(dateStr);
   } else {
     bookingDateInput.value = dateStr;
   }
+
+  // Chọn phòng
   document.getElementById("roomSelect").value = roomId;
 
-  // Set start time (convert from HH:MM format to HHMM format)
-  const startTimeNum = slot.hour * 100 + slot.min;
-  const endTimeNum = slot.endHour * 100 + slot.endMin;
-
-  document.getElementById("startTime").value = startTimeNum;
-  document.getElementById("endTime").value = endTimeNum;
-
-  // Trigger change event to update time slots
+  // Cho các sự kiện change chạy trước
   document.getElementById("roomSelect").dispatchEvent(new Event("change"));
+
   document.getElementById("bookingDate").dispatchEvent(new Event("change"));
+
+  // Đợi DOM cập nhật rồi mới gán giờ
+  setTimeout(() => {
+    document.getElementById("startTime").value = slot.hour * 100 + slot.min;
+
+    document.getElementById("startTime").dispatchEvent(new Event("change"));
+  }, 50);
 }
 
 // Show booking details in modal

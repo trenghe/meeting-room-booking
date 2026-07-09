@@ -238,14 +238,6 @@ async function handleBookingSubmit(e) {
       throw new Error("Giờ kết thúc phải sau giờ bắt đầu");
     }
 
-    // Get room capacity based on room ID
-    let maxCapacity = 20;
-    if (bookingData.room === "floor1") maxCapacity = 15;
-    else if (bookingData.room === "floor4") maxCapacity = 20;
-
-    if (bookingData.attendeesCount > maxCapacity) {
-      throw new Error(`Số người vượt quá sức chứa phòng (tối đa ${maxCapacity} người)`);
-    }
 
     // Check minimum duration (30 minutes)
     const startMins = Math.floor(startNum / 100) * 60 + (startNum % 100);
@@ -256,10 +248,6 @@ async function handleBookingSubmit(e) {
       throw new Error("Thời gian họp tối thiểu là 30 phút");
     }
 
-    // Check maximum duration (3 hours = 180 minutes)
-    if (duration > 180) {
-      throw new Error("Thời gian họp tối đa là 3 giờ");
-    }
 
     // Check if time slot is available
     if (!isTimeSlotAvailable(bookingData.date, bookingData.room, bookingData.startTime, bookingData.endTime)) {
@@ -269,26 +257,32 @@ async function handleBookingSubmit(e) {
     // Save booking to Firebase
     const result = await saveBooking(bookingData);
 
-    if (result.success) {
-      // Show success message
-      statusDiv.className = "booking-status success";
-      statusDiv.textContent = `✅ Đặt phòng thành công! Mã đặt phòng: ${result.bookingId}`;
-      statusDiv.classList.remove("hidden");
+   if (result.success) {
+     // Show success message
+     statusDiv.className = "booking-status success";
+     statusDiv.textContent = `✅ Đặt phòng thành công! Mã đặt phòng: ${result.bookingId}`;
+     statusDiv.classList.remove("hidden");
 
-      // Reset form
-      form.reset();
+     // Reset form
+     form.reset();
 
-      // Update schedule and switch to calendar tab
-      setTimeout(() => {
-        updateScheduleDisplay();
+     // Update schedule and switch to calendar tab
+     setTimeout(() => {
+       updateScheduleDisplay();
 
-        // Switch to calendar tab
-        const calendarTab = document.querySelector('[data-tab="calendar"]');
-        if (calendarTab) calendarTab.click();
-      }, 1500);
-    } else {
-      throw new Error(result.error);
-    }
+       // Ẩn thông báo thành công
+       statusDiv.classList.add("hidden");
+       statusDiv.textContent = "";
+
+       // Chuyển sang tab Lịch phòng họp
+       const calendarTab = document.querySelector('[data-tab="calendar"]');
+       if (calendarTab) {
+         calendarTab.click();
+       }
+     }, 1500);
+   } else {
+     throw new Error(result.error);
+   }
   } catch (error) {
     // Show error message
     statusDiv.className = "booking-status error";

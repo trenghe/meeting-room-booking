@@ -50,8 +50,18 @@ function renderAdminBookings() {
   }
 
   // Sắp xếp theo ngày mới nhất
-  const sortedBookings = Object.values(bookings).sort((a, b) => new Date(b.date) - new Date(a.date));
+  const sortedBookings = Object.values(bookings).sort((a, b) => {
+    // Sắp xếp ngày tăng dần
+    const dateCompare = new Date(a.date) - new Date(b.date);
+    if (dateCompare !== 0) return dateCompare;
 
+    // Nếu cùng ngày thì sắp xếp theo giờ bắt đầu
+    const timeCompare = Number(a.startTime) - Number(b.startTime);
+    if (timeCompare !== 0) return timeCompare;
+
+    // Nếu cùng giờ thì sắp xếp theo phòng
+    return (a.room || "").localeCompare(b.room || "");
+  });
   sortedBookings.forEach((booking, index) => {
     const tr = document.createElement("tr");
 
