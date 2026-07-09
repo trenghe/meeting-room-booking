@@ -16,12 +16,16 @@ function initBookingForm() {
   const bookingDate = document.getElementById("bookingDate");
   const startTimeSelect = document.getElementById("startTime");
   const endTimeSelect = document.getElementById("endTime");
+  
+  const repeatType = document.getElementById("repeatType");
+  const repeatEndDateGroup = document.getElementById("repeatEndDateGroup");
+  const repeatEndDate = document.getElementById("repeatEndDate");
 
   // Set minimum date to today
   const today = new Date();
   
   // Initialize flatpickr on bookingDate
-  flatpickr(bookingDate, {
+  const datePicker = flatpickr(bookingDate, {
     dateFormat: "Y-m-d",
     altInput: true,
     altFormat: "d/m/Y",
@@ -30,6 +34,26 @@ function initBookingForm() {
     onChange: function(selectedDates, dateStr, instance) {
        // Trigger change event to update available times
        bookingDate.dispatchEvent(new Event("change"));
+       if (typeof endDatePicker !== 'undefined') {
+         endDatePicker.set("minDate", selectedDates[0] || "today");
+       }
+    }
+  });
+
+  const endDatePicker = flatpickr(repeatEndDate, {
+    dateFormat: "Y-m-d",
+    altInput: true,
+    altFormat: "d/m/Y",
+    minDate: "today"
+  });
+
+  repeatType.addEventListener("change", function(e) {
+    if (e.target.value === "none") {
+      repeatEndDateGroup.style.display = "none";
+      repeatEndDate.removeAttribute("required");
+    } else {
+      repeatEndDateGroup.style.display = "block";
+      repeatEndDate.setAttribute("required", "required");
     }
   });
 
@@ -216,9 +240,12 @@ async function handleBookingSubmit(e) {
 
   try {
     // Collect form data
-    const bookingData = {
+    const repeatType = document.getElementById("repeatType").value;
+    const repeatEndDate = document.getElementById("repeatEndDate").value;
+    const startDateStr = document.getElementById("bookingDate").value;
+
+    const bookingDataTemplate = {
       room: document.getElementById("roomSelect").value,
-      date: document.getElementById("bookingDate").value,
       startTime: String(parseInt(document.getElementById("startTime").value)), // Convert to string
       endTime: String(parseInt(document.getElementById("endTime").value)), // Convert to string
       purpose: document.getElementById("purpose").value,
@@ -227,13 +254,17 @@ async function handleBookingSubmit(e) {
     };
 
     // Validate data
-    if (!bookingData.room || !bookingData.date || !bookingData.startTime || !bookingData.endTime) {
+    if (!bookingDataTemplate.room || !startDateStr || !bookingDataTemplate.startTime || !bookingDataTemplate.endTime) {
       throw new Error("Vui lòng điền đầy đủ thông tin phòng, ngày và giờ");
+    }
+    
+    if (repeatType !== "none" && !repeatEndDate) {
+      throw new Error("Vui lòng chọn ngày kết thúc lặp");
     }
 
     // Validate start time is before end time
-    const startNum = parseInt(bookingData.startTime);
-    const endNum = parseInt(bookingData.endTime);
+    const startNum = parseInt(bookingDataTemplate.startTime);
+    const endNum = parseInt(bookingDataTemplate.endTime);
     if (startNum >= endNum) {
       throw new Error("Giờ kết thúc phải sau giờ bắt đầu");
     }
@@ -247,42 +278,87 @@ async function handleBookingSubmit(e) {
     if (duration < 30) {
       throw new Error("Thời gian họp tối thiểu là 30 phút");
     }
+    
+    // Calculate all dates based on repeat selection
+    const bookingDates = [];
+    const startDate = new Date(startDateStr);
+    bookingDates.push(startDateStr);
 
-
-    // Check if time slot is available
-    if (!isTimeSlotAvailable(bookingData.date, bookingData.room, bookingData.startTime, bookingData.endTime)) {
-      throw new Error("Khung giờ này đã được đặt, vui lòng chọn khung giờ khác");
+    if (repeatType !== "none") {
+      const endDate = new Date(repeatEndDate);
+      if (endDate < startDate) {
+        throw new Error("Ngày kết thúc lặp phải sau ngày bắt đầu");
+      }
+      
+      let currentDate = new Date(startDate);
+      while (true) {
+        if (repeatType === "weekly") {
+          currentDate.setDate(currentDate.getDate() + 7);
+        } else if (repeatType === "monthly") {
+          currentDate.setMonth(currentDate.getMonth() + 1);
+        }
+        
+        if (currentDate > endDate) {
+          break;
+        }
+        
+        // Format to YYYY-MM-DD
+        const dateStr = currentDate.getFullYear() + "-" + 
+                        String(currentDate.getMonth() + 1).padStart(2, '0') + "-" + 
+                        String(currentDate.getDate()).padStart(2, '0');
+        bookingDates.push(dateStr);
+      }
     }
 
-    // Save booking to Firebase
-    const result = await saveBooking(bookingData);
 
-   if (result.success) {
-     // Show success message
-     statusDiv.className = "booking-status success";
-     statusDiv.textContent = `✅ Đặt phòng thành công! Mã đặt phòng: ${result.bookingId}`;
-     statusDiv.classList.remove("hidden");
+    // Check if time slot is available for all dates
+    for (const date of bookingDates) {
+      if (!isTimeSlotAvailable(date, bookingDataTemplate.room, bookingDataTemplate.startTime, bookingDataTemplate.endTime)) {
+        const [y, m, d] = date.split('-');
+        throw new Error(`Khung giờ này đã được đặt vào ngày ${d}/${m}/${y}, vui lòng chọn khung giờ khác hoặc đổi ngày kết thúc`);
+      }
+    }
 
-     // Reset form
-     form.reset();
+    // Save bookings
+    let successCount = 0;
+    const groupId = repeatType !== "none" ? "group_" + Date.now() : null;
 
-     // Update schedule and switch to calendar tab
-     setTimeout(() => {
-       updateScheduleDisplay();
+    for (const date of bookingDates) {
+      const bookingData = { ...bookingDataTemplate, date: date };
+      if (groupId) {
+        bookingData.groupId = groupId;
+      }
+      const result = await saveBooking(bookingData);
+      if (result.success) {
+        successCount++;
+      } else {
+        throw new Error(`Lỗi khi lưu đặt phòng ngày ${date}: ${result.error}`);
+      }
+    }
 
-       // Ẩn thông báo thành công
-       statusDiv.classList.add("hidden");
-       statusDiv.textContent = "";
+    // Show success message
+    statusDiv.className = "booking-status success";
+    statusDiv.textContent = `✅ Đặt phòng thành công (${successCount} buổi)!`;
+    statusDiv.classList.remove("hidden");
 
-       // Chuyển sang tab Lịch phòng họp
-       const calendarTab = document.querySelector('[data-tab="calendar"]');
-       if (calendarTab) {
-         calendarTab.click();
-       }
-     }, 1500);
-   } else {
-     throw new Error(result.error);
-   }
+    // Reset form
+    form.reset();
+    document.getElementById("repeatEndDateGroup").style.display = "none";
+
+    // Update schedule and switch to calendar tab
+    setTimeout(() => {
+      updateScheduleDisplay();
+
+      // Ẩn thông báo thành công
+      statusDiv.classList.add("hidden");
+      statusDiv.textContent = "";
+
+      // Chuyển sang tab Lịch phòng họp
+      const calendarTab = document.querySelector('[data-tab="calendar"]');
+      if (calendarTab) {
+        calendarTab.click();
+      }
+    }, 1500);
   } catch (error) {
     // Show error message
     statusDiv.className = "booking-status error";

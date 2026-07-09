@@ -97,6 +97,22 @@
               <input type="text" id="bookingDate" required />
             </div>
 
+            <!-- Repeat Selection -->
+            <div class="form-group">
+              <label for="repeatType">Lặp lại:</label>
+              <select id="repeatType">
+                <option value="none">Không lặp</option>
+                <option value="weekly">Hàng tuần</option>
+                <option value="monthly">Hàng tháng</option>
+              </select>
+            </div>
+
+            <!-- Repeat End Date Selection -->
+            <div class="form-group" id="repeatEndDateGroup" style="display: none;">
+              <label for="repeatEndDate">Ngày kết thúc lặp:</label>
+              <input type="text" id="repeatEndDate" />
+            </div>
+
             <!-- Time Range Selection -->
             <div class="form-row">
               <div class="form-group">
