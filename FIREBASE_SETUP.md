@@ -4,7 +4,7 @@
 
 1. Truy cập https://console.firebase.google.com/
 2. Click **"Add project"** (hoặc **"Create a project"**)
-3. Nhập tên project: `Meeting Room Booking` (hoặc tên của bạn)
+3. Nhập tên project: `Meeting Room Booking` 
 4. Chọn **Create project**
 
 ## Bước 2: Thêm Realtime Database
