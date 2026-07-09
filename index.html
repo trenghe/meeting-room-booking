@@ -34,9 +34,22 @@
       <section id="calendar" class="tab-content active">
         <div class="schedule-section">
           <div class="schedule-header">
-            <button class="nav-button" id="prevWeek">&laquo;</button>
-            <h2 id="weekRange"></h2>
-            <button class="nav-button" id="nextWeek">&raquo;</button>
+            <div class="week-navigation">
+              <button class="nav-button" id="prevWeek">&laquo;</button>
+              <h2 id="weekRange"></h2>
+              <button class="nav-button" id="nextWeek">&raquo;</button>
+            </div>
+            
+            <div class="schedule-legend">
+              <div class="legend-item">
+                <span class="status-badge available"></span>
+                <span>Trống</span>
+              </div>
+              <div class="legend-item">
+                <span class="status-badge booked"></span>
+                <span>Đã đặt</span>
+              </div>
+            </div>
           </div>
 
           <div class="schedule-container">
@@ -62,17 +75,7 @@
             </div>
           </div>
 
-          <div class="schedule-legend">
-    <h3>Chú thích:</h3>
-    <div class="legend-item">
-      <span class="status-badge available"></span>
-      <span>Trống</span>
-    </div>
-    <div class="legend-item">
-      <span class="status-badge booked"></span>
-      <span>Đã đặt</span>
-    </div>
-  </div>  
+
       </section>
 
       <!-- Tab 2: Booking Form -->
@@ -81,46 +84,38 @@
           <h2>Đăng Ký Phòng Họp</h2>
 
           <form id="bookingForm" class="booking-form">
-            <!-- Room Selection -->
-            <div class="form-group">
-              <label for="roomSelect">Chọn Phòng:</label>
-              <select id="roomSelect" required>
-                <option value="">-- Chọn phòng --</option>
-                <option value="floor1">Phòng họp Lầu 1 </option>
-                <option value="floor4">Phòng họp Lầu 4 </option>
-              </select>
-            </div>
+            <div class="form-col-left">
+              <!-- Organizer Info -->
+              <div class="form-group">
+                <label for="organizerName">Người Đặt:</label>
+                <input type="text" id="organizerName" placeholder="Họ và tên" required />
+              </div>
 
-            <!-- Date Selection -->
-            <div class="form-group">
-              <label for="bookingDate">Ngày Họp:</label>
-              <input type="text" id="bookingDate" required />
-            </div>
+              <!-- Room Selection -->
+              <div class="form-group">
+                <label for="roomSelect">Chọn Phòng:</label>
+                <select id="roomSelect" required>
+                  <option value="">-- Chọn phòng --</option>
+                  <option value="floor1">Phòng họp Lầu 1 </option>
+                  <option value="floor4">Phòng họp Lầu 4 </option>
+                </select>
+              </div>
 
-            <!-- Repeat Selection -->
-            <div class="form-group">
-              <label for="repeatType">Lặp lại:</label>
-              <select id="repeatType">
-                <option value="none">Không lặp</option>
-                <option value="weekly">Hàng tuần</option>
-                <option value="monthly">Hàng tháng</option>
-              </select>
-            </div>
+              <!-- Date Selection -->
+              <div class="form-group">
+                <label for="bookingDate">Ngày Họp:</label>
+                <input type="text" id="bookingDate" required />
+              </div>
 
-            <!-- Repeat End Date Selection -->
-            <div class="form-group" id="repeatEndDateGroup" style="display: none;">
-              <label for="repeatEndDate">Ngày kết thúc lặp:</label>
-              <input type="text" id="repeatEndDate" />
-            </div>
-
-            <!-- Time Range Selection -->
-            <div class="form-row">
+              <!-- Start Time -->
               <div class="form-group">
                 <label for="startTime">Giờ Bắt Đầu:</label>
                 <select id="startTime" required>
                   <option value="">-- Chọn giờ --</option>
                 </select>
               </div>
+
+              <!-- End Time -->
               <div class="form-group">
                 <label for="endTime">Giờ Kết Thúc:</label>
                 <select id="endTime" required>
@@ -129,43 +124,32 @@
               </div>
             </div>
 
-            <!-- Purpose -->
-       <div class="form-group">
-    <label for="purpose">
-        Nội dung cuộc họp
-        <span class="required">*</span>
-    </label>
+            <div class="form-col-right">
+              <!-- Repeat Selection -->
+              <div class="form-group">
+                <label for="repeatType">Lặp lại:</label>
+                <select id="repeatType">
+                  <option value="none">Không lặp</option>
+                  <option value="weekly">Hàng tuần</option>
+                  <option value="monthly">Hàng tháng</option>
+                </select>
+              </div>
 
-    <input
-        type="text"
-        id="purpose"
-        name="purpose"
-        placeholder="VD: [TK] Họp với khách hàng ABC"
-        maxlength="1000"
-        required
-    />
+              <!-- Purpose -->
+              <div class="form-group">
+                <label for="purpose">Nội dung cuộc họp <span class="required">*</span> <small class="form-hint-inline">Cú pháp: [Phòng ban viết tắt] Nội dung</small></label>
+                <input type="text" id="purpose" name="purpose" placeholder="VD: [TK] Họp với khách hàng ABC" maxlength="1000" required />
+              </div>
 
-    <small class="form-hint">
-        <strong>Cú Pháp : </strong>[ Phòng ban viết tắt ] Nội dung cuộc họp
-       
-        
-        
-    </small>
-</div>
-            <!-- Organizer Info -->
-            <div class="form-group">
-              <label for="organizerName">Người Đặt:</label>
-              <input type="text" id="organizerName" placeholder="Họ và tên" required />
-            </div>
-
-            <!-- Notes -->
-            <div class="form-group">
-              <label for="notes">Ghi Chú:</label>
-              <textarea id="notes" placeholder="Ghi chú, yêu cầu đặc biệt..."></textarea>
+              <!-- Notes -->
+              <div class="form-group">
+                <label for="notes">Ghi Chú:</label>
+                <textarea id="notes" placeholder="Ghi chú, yêu cầu đặc biệt..."></textarea>
+              </div>
             </div>
 
             <!-- Submit Button -->
-            <button type="submit" class="submit-btn">🔒 Đăng Ký Phòng</button>
+            <button type="submit" class="submit-btn" style="grid-column: 1 / -1;">🔒 Đăng Ký Phòng</button>
           </form>
 
           <!-- Booking Status -->

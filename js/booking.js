@@ -18,8 +18,6 @@ function initBookingForm() {
   const endTimeSelect = document.getElementById("endTime");
   
   const repeatType = document.getElementById("repeatType");
-  const repeatEndDateGroup = document.getElementById("repeatEndDateGroup");
-  const repeatEndDate = document.getElementById("repeatEndDate");
 
   // Set minimum date to today
   const today = new Date();
@@ -34,26 +32,6 @@ function initBookingForm() {
     onChange: function(selectedDates, dateStr, instance) {
        // Trigger change event to update available times
        bookingDate.dispatchEvent(new Event("change"));
-       if (typeof endDatePicker !== 'undefined') {
-         endDatePicker.set("minDate", selectedDates[0] || "today");
-       }
-    }
-  });
-
-  const endDatePicker = flatpickr(repeatEndDate, {
-    dateFormat: "Y-m-d",
-    altInput: true,
-    altFormat: "d/m/Y",
-    minDate: "today"
-  });
-
-  repeatType.addEventListener("change", function(e) {
-    if (e.target.value === "none") {
-      repeatEndDateGroup.style.display = "none";
-      repeatEndDate.removeAttribute("required");
-    } else {
-      repeatEndDateGroup.style.display = "block";
-      repeatEndDate.setAttribute("required", "required");
     }
   });
 
@@ -241,7 +219,8 @@ async function handleBookingSubmit(e) {
   try {
     // Collect form data
     const repeatType = document.getElementById("repeatType").value;
-    const repeatEndDate = document.getElementById("repeatEndDate").value;
+    // Mặc định lặp lại đến hết năm 2026
+    const repeatEndDate = "2026-12-31";
     const startDateStr = document.getElementById("bookingDate").value;
 
     const bookingDataTemplate = {
@@ -256,10 +235,6 @@ async function handleBookingSubmit(e) {
     // Validate data
     if (!bookingDataTemplate.room || !startDateStr || !bookingDataTemplate.startTime || !bookingDataTemplate.endTime) {
       throw new Error("Vui lòng điền đầy đủ thông tin phòng, ngày và giờ");
-    }
-    
-    if (repeatType !== "none" && !repeatEndDate) {
-      throw new Error("Vui lòng chọn ngày kết thúc lặp");
     }
 
     // Validate start time is before end time
@@ -362,7 +337,6 @@ async function handleBookingSubmit(e) {
 
     // Reset form
     form.reset();
-    document.getElementById("repeatEndDateGroup").style.display = "none";
 
     // Update schedule and switch to calendar tab
     setTimeout(() => {

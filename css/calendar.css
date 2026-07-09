@@ -10,15 +10,21 @@
 
 /* Navigation header */
 .schedule-header {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 30px;
   margin-bottom: 24px;
   padding: 18px 24px;
   background: linear-gradient(135deg, rgba(104, 154, 75, 0.1), rgba(139, 195, 74, 0.08));
   border-radius: 10px;
   border: 1px solid rgba(104, 154, 75, 0.25);
+}
+
+.week-navigation {
+  display: flex;
+  align-items: center;
+  gap: 30px;
 }
 
 .schedule-header h2 {
@@ -300,19 +306,19 @@
   letter-spacing: 0.02em;
 }
 
-/* Phòng Lầu 4 - xanh lá nhạt hơn */
+/* Phòng Lầu 4 - xanh dương (Blue) để dễ phân biệt */
 .room-row-floor4 {
-  background-color: rgba(139, 195, 74, 0.06);
+  background-color: rgba(59, 130, 246, 0.05);
 }
 
 .room-row-floor4 .schedule-cell.empty,
 .room-row-floor4 .tiet-cell {
-  background-color: #f6faf1;
+  background-color: #f0f6ff;
 }
 
 .room-row-floor4 .room-label-cell {
-  background: linear-gradient(180deg, #f1f8e9 0%, #e6f4d7 100%);
-  border-right: 3px solid #8bc34a;
+  background: linear-gradient(180deg, #eff6ff 0%, #dbeafe 100%);
+  border-right: 3px solid #3b82f6;
   text-align: center;
   font-weight: 700;
   vertical-align: middle;
@@ -322,10 +328,18 @@
 }
 
 .room-row-floor4 .room-name {
-  color: #6b9c3a;
+  color: #2563eb;
   font-size: 1rem;
   font-weight: 800;
   letter-spacing: 0.02em;
+}
+
+.room-row-floor4 .schedule-cell.booked {
+  background-color: rgba(59, 130, 246, 0.18);
+}
+
+.room-row-floor4 .schedule-cell.booked:hover {
+  background-color: rgba(59, 130, 246, 0.28);
 }
 
 /* Đường kẻ ngang đậm phân cách giữa 2 phòng */
@@ -337,36 +351,26 @@
    LEGEND
    =========================== */
 .schedule-legend {
-  margin-top: 18px;
-  padding: 14px 18px;
-  background: #f6f9f4;
-  border-radius: 8px;
-  border: 1px solid #d9e3d3;
+  position: absolute;
+  right: 24px;
   display: flex;
-  gap: 24px;
+  gap: 16px;
   align-items: center;
-  flex-wrap: wrap;
-}
-
-.schedule-legend h3 {
-  color: var(--text-dark);
-  font-size: 0.95rem;
-  margin: 0;
-  font-weight: 600;
 }
 
 .legend-item {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 0.88rem;
-  color: #374151;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-dark);
 }
 
 .status-badge {
   display: inline-block;
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   border-radius: 4px;
   border: 2px solid transparent;
   flex-shrink: 0;
@@ -412,6 +416,15 @@
   .schedule-header h2 {
     min-width: auto;
     font-size: 1.1rem;
+  }
+  .week-navigation {
+    gap: 15px;
+  }
+  .schedule-legend {
+    position: static;
+    margin-top: 15px;
+    justify-content: center;
+    width: 100%;
   }
   .schedule-table {
     font-size: 0.78rem;

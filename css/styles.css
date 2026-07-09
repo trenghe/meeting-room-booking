@@ -12,21 +12,21 @@
   --success-color: #689a4b;
   --danger-color: #ef4444;
   --warning-color: #f59e0b;
-  --dark-bg: #141514;            /* nền đen giống navbar/footer trong ảnh */
-  --dark-bg-alt: #1c1f1a;        /* nền xanh đen của section giới thiệu */
+  --dark-bg: #f8fafc;            /* nền xám nhạt cho tab */
+  --dark-bg-alt: #ffffff;        /* nền trắng cho container */
   --light-bg: #f3f4f6;
   --text-dark: #1f2937;
-  --text-light: #b8bdb5;         /* chữ phụ màu xám nhạt trên nền tối */
-  --text-on-dark: #ffffff;
-  --border-color: #33362f;
-  --shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.35);
+  --text-light: #64748b;         /* chữ phụ màu xám */
+  --text-on-dark: #1e293b;       /* chữ tối màu trên nền sáng */
+  --border-color: #e2e8f0;       /* viền xám nhạt */
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.05);
 }
 
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #1c1f1a 0%, #141514 100%);
-  color: var(--text-on-dark);
+  background: #f1f5f9; /* Nền trang sáng màu */
+  color: var(--text-dark);
   line-height: 1.6;
   min-height: 100vh;
   padding: 20px;
@@ -48,7 +48,8 @@ body {
     justify-content: center;
     align-items: center;
     height: 90px;
-    background: #181818;
+    background: #ffffff;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .logo {
@@ -64,14 +65,14 @@ body {
     margin: 0;
     font-size: 2.8rem;
     font-weight: 700;
-    color: #fff;
+    color: var(--primary-color-dark);
     padding-left: 160px; /* Chừa chỗ cho logo */
 }
 .header h1 {
   font-size: 2.5rem;
   margin-bottom: 10px;
   font-weight: 700;
-  color: var(--text-on-dark);
+  color: var(--primary-color-dark);
 }
 
 .header .subtitle {
@@ -145,6 +146,12 @@ body {
   margin-top: 20px;
 }
 
+.form-col-left, .form-col-right {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 .form-group {
   display: flex;
   flex-direction: column;
@@ -156,6 +163,13 @@ body {
   color: var(--text-on-dark);
 }
 
+.form-hint-inline {
+  font-weight: 400;
+  font-size: 0.82rem;
+  color: var(--text-light);
+  font-style: italic;
+}
+
 .form-group input,
 .form-group select,
 .form-group textarea {
@@ -164,7 +178,7 @@ body {
   border-radius: 6px;
   font-size: 1rem;
   font-family: inherit;
-  background-color: #23261f;
+  background-color: #ffffff;
   color: var(--text-on-dark);
   transition: border-color 0.3s ease;
 }
@@ -276,7 +290,7 @@ body {
 .rules-section {
   margin-bottom: 30px;
   padding: 20px;
-  background-color: #1c1f1a;
+  background-color: #f8fafc;
   border-radius: 8px;
   border-left: 4px solid var(--primary-color);
 }
@@ -323,10 +337,11 @@ body {
 }
 
 .room-spec {
-  background: #23261f;
+  background: #ffffff;
   padding: 15px;
   border-radius: 6px;
   box-shadow: var(--shadow);
+  border: 1px solid var(--border-color);
 }
 
 .room-spec h4 {
