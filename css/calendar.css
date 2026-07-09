@@ -143,6 +143,11 @@
   /* background: rgba(239, 68, 68, 0.35) !important; */
 }
 
+/* Highlight Hôm nay */
+.today-cell:not(.booked) {
+  background-color: #fef08a !important; /* Vàng nhạt cho ô trống */
+}
+
 /* ===========================
    TBODY ROWS
    =========================== */
@@ -281,7 +286,7 @@
    PHÂN BIỆT 2 PHÒNG THEO SẮC ĐỘ XANH LÁ
    =========================== */
 
-/* Phòng Lầu 1 - xanh lá đậm */
+/* Phòng tầng 2 - xanh lá đậm */
 .room-row-floor1 {
   background-color: rgba(79, 122, 55, 0.045);
 }
@@ -309,7 +314,7 @@
   letter-spacing: 0.02em;
 }
 
-/* Phòng Lầu 4 - xanh dương (Blue) để dễ phân biệt */
+/* Phòng tầng 4 - xanh dương (Blue) để dễ phân biệt */
 .room-row-floor4 {
   background-color: rgba(59, 130, 246, 0.05);
 }
@@ -428,6 +433,10 @@
     margin-top: 15px;
     justify-content: center;
     width: 100%;
+  }
+  .schedule-table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
   .schedule-table {
     font-size: 0.78rem;

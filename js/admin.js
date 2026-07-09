@@ -65,7 +65,7 @@ function renderAdminBookings() {
   sortedBookings.forEach((booking, index) => {
     const tr = document.createElement("tr");
 
-    const roomName = booking.room === "floor1" ? "Phòng họp Lầu 1" : "Phòng họp Lầu 4";
+    const roomName = booking.room === "floor1" ? "Phòng họp tầng 2" : "Phòng họp tầng 4";
 
     const startTime = parseInt(booking.startTime) || 0;
     const endTime = parseInt(booking.endTime) || 0;

@@ -99,8 +99,8 @@ function getScheduleTimeSlots() {
 // Define rooms
 function getRooms() {
   return [
-    { id: "floor1", name: "Phòng họp Lầu 1", capacity: 15 },
-    { id: "floor4", name: "Phòng họp Lầu 4", capacity: 20 },
+    { id: "floor1", name: "Phòng họp tầng 2", capacity: 15 },
+    { id: "floor4", name: "Phòng họp tầng 4", capacity: 20 },
   ];
 }
 
@@ -171,6 +171,11 @@ function updateScheduleDisplay() {
 
         const cell = document.createElement("td");
         cell.className = "schedule-cell";
+
+        const today = new Date();
+        if (cellDate.getDate() === today.getDate() && cellDate.getMonth() === today.getMonth() && cellDate.getFullYear() === today.getFullYear()) {
+          cell.classList.add("today-cell");
+        }
 
         if (slot.isBreak) {
           // Break time cell (only if not spanned over by a booking)
@@ -255,6 +260,14 @@ function updateDayHeaders() {
         dayHeader.classList.add("sunday-header");
       } else {
         dayHeader.classList.remove("sunday-header");
+      }
+
+      // Highlight hôm nay
+      const today = new Date();
+      if (date.getDate() === today.getDate() && date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear()) {
+        dayHeader.classList.add("today-header");
+      } else {
+        dayHeader.classList.remove("today-header");
       }
     }
   }
