@@ -99,6 +99,7 @@ function pad2(n) {
 }
 
 // Update schedule display
+// Update schedule display
 function updateScheduleDisplay() {
   const scheduleBody = document.getElementById("scheduleBody");
   if (!scheduleBody) return;
@@ -108,12 +109,20 @@ function updateScheduleDisplay() {
   const rooms = getRooms();
   const timeSlots = getScheduleTimeSlots();
 
-  rooms.forEach((room) => {
+  rooms.forEach((room, roomIndex) => {
     // Keep track of how many cells to skip for each day column due to rowspan
     let skipCells = [0, 0, 0, 0, 0, 0, 0];
 
     timeSlots.forEach((slot, slotIdx) => {
       const row = document.createElement("tr");
+
+      // Gắn class riêng cho từng phòng để tô màu phân biệt
+      row.classList.add(`room-row-${room.id}`);
+
+      // Đánh dấu hàng đầu tiên của phòng (trừ phòng đầu tiên) để vẽ đường phân cách ngang
+      if (slotIdx === 0 && roomIndex > 0) {
+        row.classList.add("room-divider");
+      }
 
       // ---- Cột Phòng (rowspan = số tiết) ----
       if (slotIdx === 0) {
@@ -209,7 +218,7 @@ function updateScheduleDisplay() {
   });
 
   updateDayHeaders();
-}
+}x
 
 // Update day headers — kiểu: "Thứ 2\n(06-07-2026)"
 function updateDayHeaders() {

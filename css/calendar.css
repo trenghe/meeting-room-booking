@@ -412,3 +412,40 @@
     font-size: 0.82rem;
   }
 }
+
+/* ===========================
+   PHÂN BIỆT 2 PHÒNG THEO MÀU
+   =========================== */
+
+/* Phòng Lầu 1 - tông xanh lá đậm (primary) */
+.room-row-floor1 {
+  background-color: rgba(104, 154, 75, 0.05);
+}
+
+.room-row-floor1 .room-label-cell {
+  background: linear-gradient(180deg, #1c2a17 0%, #223019 100%);
+  border-right: 2px solid var(--primary-color);
+}
+
+.room-row-floor1 .room-name {
+  color: var(--primary-color);
+}
+
+/* Phòng Lầu 4 - tông xanh lá nhạt (secondary) để phân biệt */
+.room-row-floor4 {
+  background-color: rgba(139, 195, 74, 0.06);
+}
+
+.room-row-floor4 .room-label-cell {
+  background: linear-gradient(180deg, #1e2419 0%, #262f1c 100%);
+  border-right: 2px solid var(--secondary-color);
+}
+
+.room-row-floor4 .room-name {
+  color: var(--secondary-color);
+}
+
+/* Đường kẻ ngang đậm phân cách giữa 2 phòng */
+.room-divider td {
+  border-top: 3px solid var(--primary-color);
+}
