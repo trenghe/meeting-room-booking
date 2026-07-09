@@ -9,6 +9,15 @@ function getMonday(date) {
   return new Date(d.setDate(diff));
 }
 
+// Get week number (ISO 8601)
+function getWeekNumber(d) {
+  const date = new Date(d.getTime());
+  date.setHours(0, 0, 0, 0);
+  date.setDate(date.getDate() + 3 - (date.getDay() + 6) % 7);
+  const week1 = new Date(date.getFullYear(), 0, 4);
+  return 1 + Math.round(((date.getTime() - week1.getTime()) / 86400000 - 3 + (week1.getDay() + 6) % 7) / 7);
+}
+
 // Get week range display
 function getWeekRangeText(startDate) {
   const endDate = new Date(startDate);
@@ -16,10 +25,12 @@ function getWeekRangeText(startDate) {
 
   const pad = (n) => String(n).padStart(2, "0");
 
-  const startText = `${pad(startDate.getDate())}/${pad(startDate.getMonth() + 1)}`;
+  const startText = `${pad(startDate.getDate())}/${pad(startDate.getMonth() + 1)}/${startDate.getFullYear()}`;
   const endText = `${pad(endDate.getDate())}/${pad(endDate.getMonth() + 1)}/${endDate.getFullYear()}`;
+  
+  const weekNum = getWeekNumber(startDate);
 
-  return `Tuần: ${startText} - ${endText}`;
+  return `Tuần ${weekNum} (${startText} - ${endText})`;
 }
 
 // Initialize schedule
