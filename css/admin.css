@@ -1,0 +1,178 @@
+/* ===========================
+   ADMIN PAGE STYLES
+   =========================== */
+
+#adminView {
+  padding: 30px;
+  background-color: var(--dark-bg-alt);
+  color: var(--text-on-dark);
+}
+
+.admin-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.admin-container h2 {
+  color: var(--secondary-color);
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+/* Thanh trên cùng chứa link quay lại */
+.admin-topbar {
+  margin-bottom: 20px;
+}
+
+.back-link {
+  text-decoration: none;
+  color: var(--secondary-color);
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
+}
+
+.back-link:hover {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
+/* Bảng dữ liệu */
+.table-responsive {
+  overflow-x: auto;
+  border-radius: 10px;
+  box-shadow: var(--shadow-lg);
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0;
+  background-color: var(--dark-bg-alt);
+  font-size: 0.92rem;
+}
+
+.admin-table thead tr {
+  background: linear-gradient(135deg, #141514 0%, #3a4a2e 60%, var(--primary-color) 100%);
+}
+
+.admin-table th {
+  padding: 14px 12px;
+  text-align: left;
+  color: #ffffff;
+  font-weight: 700;
+  border: 1px solid var(--border-color);
+  white-space: nowrap;
+}
+
+.admin-table td {
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  color: var(--text-on-dark);
+  vertical-align: middle;
+}
+
+.admin-table tbody tr {
+  background-color: #1c1f1a;
+  transition: background-color 0.2s ease;
+}
+
+.admin-table tbody tr:nth-child(even) {
+  background-color: #202318;
+}
+
+.admin-table tbody tr:hover {
+  background-color: rgba(104, 154, 75, 0.12);
+}
+
+/* Nút thao tác (sửa/xoá...) trong bảng admin */
+.admin-table .action-btn {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-right: 6px;
+  transition: all 0.2s ease;
+}
+
+.admin-table .action-btn.edit {
+  background-color: rgba(104, 154, 75, 0.15);
+  color: var(--secondary-color);
+  border: 1px solid var(--primary-color);
+}
+
+.admin-table .action-btn.edit:hover {
+  background-color: var(--primary-color);
+  color: #ffffff;
+}
+
+.admin-table .action-btn.delete {
+  background-color: rgba(239, 68, 68, 0.12);
+  color: var(--danger-color);
+  border: 1px solid var(--danger-color);
+}
+
+.admin-table .action-btn.delete:hover {
+  background-color: var(--danger-color);
+  color: #ffffff;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  #adminView {
+    padding: 16px;
+  }
+  .admin-table th,
+  .admin-table td {
+    padding: 8px 6px;
+    font-size: 0.82rem;
+  }
+}
+
+/* ===========================
+   ADMIN HEADER - LOGO & LAYOUT
+   =========================== */
+
+.admin-header {
+  position: relative;
+  padding-top: 60px;
+  padding-bottom: 30px;
+}
+
+.admin-header .logo {
+  position: absolute;
+  top: 18px;
+  left: 24px;
+  height: 34px;
+  display: block;
+}
+
+.admin-header h1 {
+  display: block;
+  font-size: 2.2rem;
+}
+
+.admin-header .subtitle {
+  display: block;
+  margin-top: 8px;
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--text-light);
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .admin-header {
+    padding-top: 50px;
+  }
+  .admin-header .logo {
+    height: 28px;
+    top: 14px;
+    left: 16px;
+  }
+  .admin-header h1 {
+    font-size: 1.5rem;
+  }
+}
