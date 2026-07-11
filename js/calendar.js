@@ -52,6 +52,7 @@ function updateWeekDisplay() {
 function setupScheduleNavigation() {
   const prevBtn = document.getElementById("prevWeek");
   const nextBtn = document.getElementById("nextWeek");
+  const currentWeekBtn = document.getElementById("currentWeekBtn");
 
   if (prevBtn) {
     prevBtn.addEventListener("click", () => {
@@ -64,6 +65,14 @@ function setupScheduleNavigation() {
   if (nextBtn) {
     nextBtn.addEventListener("click", () => {
       currentWeekStart.setDate(currentWeekStart.getDate() + 7);
+      updateWeekDisplay();
+      updateScheduleDisplay();
+    });
+  }
+
+  if (currentWeekBtn) {
+    currentWeekBtn.addEventListener("click", () => {
+      currentWeekStart = getMonday(new Date());
       updateWeekDisplay();
       updateScheduleDisplay();
     });

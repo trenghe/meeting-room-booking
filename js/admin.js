@@ -49,8 +49,18 @@ function renderAdminBookings() {
     return;
   }
 
+  // Lọc lịch từ hôm nay trở đi
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const filteredBookings = Object.values(bookings).filter(booking => {
+    const bookingDate = new Date(booking.date);
+    bookingDate.setHours(0, 0, 0, 0);
+    return bookingDate.getTime() >= today.getTime();
+  });
+
   // Sắp xếp theo ngày mới nhất
-  const sortedBookings = Object.values(bookings).sort((a, b) => {
+  const sortedBookings = filteredBookings.sort((a, b) => {
     // Sắp xếp ngày tăng dần
     const dateCompare = new Date(a.date) - new Date(b.date);
     if (dateCompare !== 0) return dateCompare;
@@ -74,10 +84,10 @@ function renderAdminBookings() {
 
     tr.innerHTML = `
       <td><strong>${index + 1}</strong></td>
-      <td>${formatDate(booking.date)}</td>
-      <td>${roomName}</td>
-      <td>${timeStr}</td>
-      <td>${booking.organizerName || ""}</td>
+      <td style="white-space: nowrap;">${formatDate(booking.date)}</td>
+      <td style="white-space: nowrap;">${roomName}</td>
+      <td style="white-space: nowrap;">${timeStr}</td>
+      <td style="white-space: nowrap;">${booking.organizerName || ""}</td>
       <td>${booking.purpose || ""}</td>
       <td>
         <div style="display: flex; gap: 5px;">
