@@ -53,7 +53,7 @@ function renderAdminBookings() {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  const filteredBookings = Object.values(bookings).filter(booking => {
+  const filteredBookings = Object.values(bookings).filter((booking) => {
     const bookingDate = new Date(booking.date);
     bookingDate.setHours(0, 0, 0, 0);
     return bookingDate.getTime() >= today.getTime();
@@ -139,15 +139,15 @@ function populateTimeOptions(selectId, selectedValue = "") {
   const select = document.getElementById(selectId);
   if (!select) return;
   select.innerHTML = '<option value="">-- Chọn giờ --</option>';
-  
+
   const slots = [];
   for (let hour = 8; hour <= 17; hour++) {
-    slots.push(hour * 100);       // HH:00
-    slots.push(hour * 100 + 30);  // HH:30
+    slots.push(hour * 100); // HH:00
+    slots.push(hour * 100 + 30); // HH:30
   }
   slots.push(1800); // 18:00
-  
-  slots.forEach(slot => {
+
+  slots.forEach((slot) => {
     const option = document.createElement("option");
     option.value = slot;
     option.textContent = formatTime(slot);
@@ -165,10 +165,10 @@ function editBookingHandler(id) {
   // Populate fields
   document.getElementById("editBookingId").value = id;
   document.getElementById("editRoomSelect").value = booking.room || "floor1";
-  
+
   // Format date for input type="date" (YYYY-MM-DD)
   const d = new Date(booking.date);
-  const dateString = isNaN(d.getTime()) ? booking.date : d.toISOString().split('T')[0];
+  const dateString = isNaN(d.getTime()) ? booking.date : d.toISOString().split("T")[0];
   document.getElementById("editBookingDate").value = dateString;
 
   populateTimeOptions("editStartTime", booking.startTime);
@@ -205,14 +205,15 @@ document.addEventListener("DOMContentLoaded", () => {
       const updatedData = {
         room: document.getElementById("editRoomSelect").value,
         date: document.getElementById("editBookingDate").value,
-        startTime: parseInt(document.getElementById("editStartTime").value),
-        endTime: parseInt(document.getElementById("editEndTime").value),
+        // Chuyển sang string để khớp với Firebase rule (.validate yêu cầu isString())
+        startTime: String(parseInt(document.getElementById("editStartTime").value)),
+        endTime: String(parseInt(document.getElementById("editEndTime").value)),
         purpose: document.getElementById("editPurpose").value,
         organizerName: document.getElementById("editOrganizerName").value,
         notes: document.getElementById("editNotes").value,
       };
 
-      if (updatedData.startTime >= updatedData.endTime) {
+      if (parseInt(updatedData.startTime) >= parseInt(updatedData.endTime)) {
         alert("Giờ kết thúc phải lớn hơn giờ bắt đầu!");
         return;
       }
@@ -222,8 +223,8 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("Phòng đã được đặt trong khoảng thời gian này. Vui lòng chọn giờ khác.");
         return;
       }
-      
-      updateBooking(id, updatedData).then(res => {
+
+      updateBooking(id, updatedData).then((res) => {
         if (res.success) {
           showNotification("✅ Đã cập nhật lịch họp thành công", "success");
           closeEditModal();
